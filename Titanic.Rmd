@@ -1002,9 +1002,6 @@ percentatge_encerts(idx_val5)
 ```
 
 
-
-
-
 Veiem que en totes les particions de les dades, tenim un percentatge d'encerts molt estable vora el 81%. 
 
 
