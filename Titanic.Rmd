@@ -942,12 +942,15 @@ summary(Mlog5)
 
 Podem veure que la majoria de coeficients tenen un alt nivell de significació. L'excepció serien els factors d'edat més avançada (dels 65 anys cap amunt) o més jove (dels 15 anys en avall), viatjar en 2a classe, i la tarifa de viatge.
 
-**Validació**
+## Validació
+
+Per validar el nostre model, farem servir la metodologia "5-fold cross validation". Es a dir, deixem un 20% de les dades a banda, entrenem el model amb l'altre 80%, i finalment comprovem amb quina exactitud el model prediu el 20% de dades que hem apartat. Això ho farem en 5 particions de dades, de manera que tots els registres formin part d'un subconjunt de validació.
 
 ```{r}
-# Barregem aleatòriament les files de dades_train
+# Barregem aleatòriament les files de dades_train:
 dades_val <- sample_n(dades_train, nrow(dades_train), replace=F)
 
+# Guardem els índexos de cada cinquena part de les dades:
 idx_val1 <- c(1:178)
 idx_val2 <- c(179:356)
 idx_val3 <- c(357:534)
@@ -957,8 +960,7 @@ idx_val5 <- c(714:891)
 ```
 
 
-
-Predicció amb les dades **train**
+Creem una funció que aplica el model a un subconjunt de les dades, i calcula el percentatge d'encerts del resultat:
 
 ```{r}
 
@@ -977,17 +979,33 @@ percentatge_encerts <- function(indices){
   sum(diag(conf_matrix)) * 100 / sum(conf_matrix)
 }
 
-percentatge_encerts(idx_val1)
-percentatge_encerts(idx_val2)
-percentatge_encerts(idx_val3)
-percentatge_encerts(idx_val4)
-percentatge_encerts(idx_val5)
-
 
 
 ```
 
-Veiem que en totes les particions de les dades, tenim un percentatge d'encerts molt estable vora el 80%. 
+
+Utlilitzem la funció per calcular el percentatge d'encerts de cada subconjunt de dades:
+
+```{r}
+# Percentatge d'encerts amb l'split num 1:
+percentatge_encerts(idx_val1)
+# Percentatge d'encerts amb l'split num 2:
+percentatge_encerts(idx_val2)
+# Percentatge d'encerts amb l'split num 3:
+percentatge_encerts(idx_val3)
+# Percentatge d'encerts amb l'split num 4:
+percentatge_encerts(idx_val4)
+# Percentatge d'encerts amb l'split num 5:
+percentatge_encerts(idx_val5)
+
+
+```
+
+
+
+
+
+Veiem que en totes les particions de les dades, tenim un percentatge d'encerts molt estable vora el 81%. 
 
 
 
