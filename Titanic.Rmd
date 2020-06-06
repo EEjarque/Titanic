@@ -1,0 +1,1072 @@
+---
+title: "Titanic: Quins factors van determinar la supervivència dels passatgers?"
+subtitle: "Pràctica 2 - Tipologia i cicle de vida de les dades \n https://github.com/EEjarque/Titanic/tree/master"
+author: "Elisabet Ejarque Gonzalez"
+date: "Juny de 2020"
+output:
+  html_document:
+    highlight: default
+    number_sections: yes
+    theme: default
+    toc: yes
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(eval=T, echo=T, warning=F, message=F)
+library(tidyverse)
+library(janitor)
+library(kableExtra)
+library(gridExtra)
+library(grid)
+library(corrplot)
+
+```
+
+
+
+# Introducció
+
+El 14 d'abril de 1912, el gran transatlàntic del Titànic va passar a la història pel seu tràgic naufragi després de xocar amb un iceberg, durant el seu viatge inaugural des de Southampton direcció Nova York. Malgrat tots els avencços tecnològics que incorporava, hi va haver una mortalitat molt elevada. Aquesta mortalitat, va estar esbiaixada per una sèrie de condicionants culturals de l'època. Així doncs, intentar modelitzar la supervivència dels passatgers del titànic ens pot permetre identificar aquests condicionants socials, i demostrar com alguns sectors mantenien privilegis, fins i tot davant una situació tant dramàtica com un naufragi.
+
+Per fer aquest treball s'utilitzarà el contjunt de dades "Titanic" mantingut per [Kaggle](https://www.kaggle.com/c/titanic).
+L'objectiu de l'anàlisi és entendre els factors que van determinar la supervivència dels passatgers d'aquell viatge inaugural cap a Amèrica, i utilitzar-los per crear un model predictiu.
+
+
+
+# Descripció de les dades
+
+Les dades inclouen les següents variables:
+
+- **PassengerId:** Identificador únic de cada passatger. L'utilitzarem per tornar a desmuntar més tard el conjunt de dades en train/test segons les dades originals facilitades per kaggle.
+
+- **Survived:** Variable binària, indicant si el passatger ha sobreviscut o no. Es la variable que s'ha de predir.
+
+- **Pclass:** En quina classe viatjava el passatger (1, 2 o 3)
+
+- **Name:** Nom del passatger. El format és: Cognom + coma + títol + nom + sobrenom en parèntesis. Aquesta estructura es pot utilitzar per subdividir aquesta variable en Cognom, Títol, Nom.
+
+- **Sex:** Si el passatger era dona (female) o home (male).
+
+- **Age:** Edat del passatger.
+
+- **SibSp:** Nombre de germans o germanes + marit o muller (Siblins + Spouse).
+
+- **Parch:** Nombre de pares o mares + fills (Parents + Children).
+
+- **Ticket:** Codi del tiquet, del seu passatge en el Titanic.
+
+- **Cabin:** Cabina que ocupaven. La primera lletra indica la coberta del baixell on es trobava. Les classes altes solien ocupar les cobertes on el baixell es movia menys.
+
+- **Embarked:** A quina població van embarcar al Titanic. Per ordre de ruta, aquestes poblacions són: S = Southampton, C = Cherbourgh i Q = Queenstown.
+
+
+Kaggle facilita les dades en dos conjunts: un anomenat "train" i un altre anomenat "test", amb la idea que el primer s'utilitzi per entrenar els models predictius, i el segon per fer-ne la validació i participar a la comptetició. Per això, aquest segon conjunt de dades no té la variable Survival informada.
+
+
+
+# Càrrega i preparació de les dades
+
+En la fase inicial de neteja de dades, ajuntarem els dos datasets, test i train, per assegurar que apliquem els mateixos criteris a totes les dades. Guardarem en una columna nova (Dataset) de quin conjunt procedeix cada registre, per després poder tornar a separar els conjunts train i test.
+
+```{r}
+
+# Carreguem les dades
+train <- read.csv("C:/Dades/UOC/11-Tipologia i cicle de vida de les dades/PR2/Titanic/train.csv") %>% as_tibble() %>% mutate(Dataset = "train")
+test <- read.csv("C:/Dades/UOC/11-Tipologia i cicle de vida de les dades/PR2/Titanic/test.csv") %>% as_tibble() %>% mutate(Dataset = "test")
+ 
+# Els unim en un sol data set i transformem algunes variables a factor
+dades <- bind_rows(train, test) %>%
+  mutate(Survived = as.factor(as.character(Survived)),
+         Pclass = as.factor(as.character(Pclass)),
+         Embarked = as.factor(Embarked))
+
+# Visualitzem l'estructura de les dades
+str(dades)
+
+```
+
+El dataset consta de `r nrow(dades)` registres i `r ncol(dades)` variables. Segons [wikipedia](https://ca.wikipedia.org/wiki/RMS_Titanic) [1], el Titanic portava en total 2224 passatgers, dels quals 885 eren tripulació. La diferència són 1339 passatgers, que pràcticament encaixen amb el nombre de files del data set.
+
+
+
+
+# Exploració i transformació de les variables
+
+En aquest apartat, explorem les característiques cada variable, és a dir: presència d'outliers, dades perdudes, etc; i les transformem si és necessari. També, explorem visualment la seva relació amb la variable Survived, per anar-nos creant una idea de quines poden ser rellevants per incloure en un model predicitu.
+
+## PassengerId
+
+Es un identificador únic de cada passatger, per tant, ens assegurem que no conté valors duplicats ni valors perduts.
+
+```{r}
+# Quants valors perduts (NA) conté?
+sum(is.na(dades$PassengerId))
+
+# Són tot valors únics?
+length(dades$PassengerId) == unique(length(dades$PassengerId))
+
+# PassengerId són numeros correlatiuis
+dades$PassengerId %>% diff %>% unique
+```
+
+Tot sembla correcte amb aquesta variable.
+
+## Survived
+
+```{r}
+
+dades$Survived %>% table(useNA = "always")
+
+```
+
+Veiem que hi ha 549 persones que no van sobreviure (categoria 0), i 342 que sí (categoria 1). Les dades contenen 418 dades perdudes, que són les del test data set (com s'ha comentat, kaggle no revela l'output perquè és part de la competició).
+
+```{r}
+table(dades$Survived, dades$Dataset, useNA = "always")
+```
+
+Per tant, tampoc cal cap transformacio per aquesta variable.
+
+
+
+## Pclass
+
+Aproximadament, la metiat dels passatgers van viatjar en tercera classe, i l'altra meitat ho van fer a primera i segona classe. No hi ha dades perdudes.
+
+```{r}
+dades$Pclass %>% table(useNA = "always")
+```
+
+
+Aquesta és una de les variables més clàssiques i àmpliament coneguda, que va condicionar el fet de sobreviure o no durant el naufragi.
+Com mostra el següent gràfic, més de la meitat dels passatgers en primera classe van sobreviure, mentre que a 3a classe només ho van fer una minoria.
+
+```{r fig.width=6, fig.height=4}
+
+ggplot(dades %>% filter(!is.na(Survived)), aes(x=Pclass, fill=Survived)) +
+  geom_bar(stat="count", position=position_dodge()) +
+  theme_classic()
+
+```
+
+## Sex
+
+Hi havia el doble d'homes que de dones. Tampoc hi ha dades perdudes en aquesta variable.
+
+```{r fig.width=6, fig.height=4}
+dades$Sex %>% table(useNA = "always")
+```
+
+
+Amb el principi de _"les dones i els nens primer"_ hi va haver una gran mortalitat d'homes:
+
+```{r fig.width=6, fig.height=4}
+
+ggplot(dades %>% filter(!is.na(Survived)), aes(x=Sex, fill=Survived)) +
+  geom_bar(stat="count", position=position_dodge()) +
+  theme_classic()
+
+```
+
+
+
+## Age
+
+La mediana de l'edat dels passatgers era `r median(dades$Age, na.rm=T)` i la mitjana `r mean(dades$Age, na.rm=T)`. També veiem que les edats més freqüents són entre els 20 i 30 anys.
+
+```{r}
+
+# Histograma
+ggplot(dades, aes(x=Age)) +
+    geom_histogram(colour="blue", fill="cornflowerblue") +
+    theme_classic()
+
+```
+
+
+En aquest cas, sí que tenim una quantitat important de dades perdudes:
+
+```{r}
+# Quin percentatge de dades perdudes tenim:
+sum(is.na(dades$Age)) * 100 / nrow(dades)
+```
+
+
+A continuació, discretitzem la variable Age (Age_disc). De cara a modelitzar la supervivència, segurament no influeix tant l'edat exacta sinó el rang d'edat, de manera que podem evitar overfitting. I la discretització també pot facilitar la imputació, ja que no tenim cap variable que es pugui relacionar amb l'edat a un nivell de valor exacte.
+
+```{r}
+dades <- dades %>%
+  mutate(Age_disc = cut(dades$Age, seq(0,80,5)))
+```
+
+
+Observem les noves categories creades:
+
+```{r fig.width=8, fig.height=4}
+ggplot(dades %>% filter(!is.na(Age)), aes(x=Age_disc)) +
+  geom_bar(fill="darkolivegreen2", colour="darkolivegreen") +
+  theme_classic()
+```
+
+
+
+La mortalitat sembla força ben distribuïda al llarg de tot el rang d'edats.
+
+```{r, fig.width=12, fig.height=4}
+
+grid.arrange( 
+  ggplot(dades %>% filter(!is.na(Age) & !is.na(Survived)), aes(x=Age, fill=Survived, color=Survived)) +
+    geom_histogram() +
+    theme_classic(),
+  
+  
+  ggplot(dades %>% filter(!is.na(Age) & !is.na(Survived)), aes(x=Age_disc, fill=Survived)) +
+    geom_bar() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+    theme_classic(),
+  
+  ncol=2
+  
+  
+  )
+
+```
+
+
+## Family size: SibSp i Parch
+
+Primerament, combinarem les variables SibSp i Parch per saber el total de persones amb qui viatjava cada passatger.
+
+```{r}
+# Creem variable FamSize
+dades <- dades %>% mutate(FamSize = SibSp + Parch)
+  
+```
+
+
+La gran majoria de gent viatjava sola.
+
+```{r}
+table(dades$FamSize, useNA="always")
+```
+
+Les classes baixes destaquen per tenir la majoria de passatgers que viatgen sols, i també, les unitats familiars més grans.
+Les classes altes majoritàriament viatjaven en unitats de 0-2 parents (grups de 1-3 persones).
+
+```{r}
+table(dades$FamSize, dades$Pclass, useNA="always")
+```
+
+L'efecte de la família potser és un efecte a priori menys conegut. Veiem que la gent que viatjava sola tenia menys probabilitat de sobreviure, mentre que els que viatjaven amb 1, 2 o 3 acompanyants, van sobreviure en més d'un 50%. 
+De totes maneres, això podria estar reflectint indirectament la classe, ja que com veiem, la major part de la gent de 3a classe viatjava sola, o bé en unitats familiars molt grans. En canvi les unitats de 1-3 persones estaven representades principalment per la primera i segona classe.
+
+
+```{r fig.width=8, fig.height=4}
+ggplot(dades %>% filter(!is.na(Survived)), aes(x=FamSize, fill=factor(Survived))) +
+  geom_bar(stat="count", position=position_dodge()) +
+  theme_classic()
+```
+
+
+Intentem distingir doncs, fins on l'efecte és a causa de la classe (Pclass), i fins on la mida familiar (FamSize).
+
+Si separem l'efecte de la mida familiar per classe social, veiem com efectivament com la classe era el més important. Viatjar sol penalitzava molt en tercera classe i fins i tot en segona, però no semblava tenir un efecte a primera classe.
+Sí que veiem, però, que el fet de tenir un o dos acompanyats afavoria molt la supervivència a totes 3 classes.
+
+```{r, fig.width=12, fig.height=4}
+ggplot(dades %>% filter(!is.na(Survived)), aes(x=FamSize, fill=factor(Survived))) +
+  geom_bar(stat="count", position=position_dodge()) +
+  facet_wrap(~Pclass)
+```
+
+Per tant podem concloure que malgrat que la classe és la variable que sembla tenir un efecte més directe, la mida de la família també sembla que pot tenir un paper important a l'hora d'afinar la predicció de la supervivència.
+
+
+
+## Cabin and Deck
+
+En termes de supervivència, segurament el més important és la coberta (Deck), ja que algunes estaven més ben situades en quant a l'evacuació (Tot i que en alguns casos, la cabina també ho hauria pogut ser, segons si cada cabina estava més lluny o més a prop de la sortida d'emergència). La coberta s'indica en la primera lletra de la variable Cabin. Per tant, creem aquesta nova variable Deck a partir de Cabin:
+
+```{r}
+dades <- dades %>% mutate(Deck = substring(Cabin, 1,1))
+```
+
+Comencem fixant-nos en quants passatgers hi havia a cada coberta:
+
+```{r}
+table(dades$Deck, useNA = "always")
+```
+
+Veiem que tenim una gran quantitat de dades perdudes, que estan en forma d'un string buit. Ho transformem a NA per homogenitzar l'expressió de valors perduts entre variables:
+
+```{r}
+dades <- dades %>%
+  mutate(Deck = ifelse(Deck == "", NA, Deck),
+         Cabin = ifelse(Cabin == "", NA, Cabin))
+
+table(dades$Deck, useNA = "always")
+```
+
+Observem que un 77.4% de les dades de Deck (i per tant, de Cabin) no estan informades.
+
+```{r}
+sum(is.na(dades$Deck)) * 100 / nrow(dades)
+```
+
+Fixem-nos ara, en quines classes ocupaven cada coberta:
+
+
+```{r}
+# A quina classe pertanyia cada Deck
+table(dades$Pclass, dades$Deck, useNA="always")
+```
+
+Veiem una cosa molt interessant: Excepte uns pocs casos, els passatgers de 2a i 3a classe no tenen la Cabina (i per tant la coberta) informada. Aquest fet suggereix que l'administració del baixell portava un control poc acurat d'aquells que no fossin primera classe.
+ 
+
+Si grafiquem el nombre de supervivents per coberta, veiem que a totes les cobertes hi ha més supervivents que no pas morts. Excepte, en el grup de passatgers amb la coberta no informada. La qual cosa encaixa amb la idea que aquells passatgers amb la coberta no informada corresponen majoritàriament a 3a classe. 
+
+
+```{r fig.width=8, fig.height=4}
+
+ggplot(dades %>% filter(!is.na(Survived)), aes(x=Deck, fill=Survived)) +
+  geom_bar(stat="count", position=position_dodge()) +
+  theme_classic()
+
+```
+
+
+
+## Name
+
+La variable Name l'hem reorganitzat en FamilyName, Title i Name. Title i FamilyName podrien ser útils per reconstruir l'edat dels passatgers i relacions de parentiu.
+
+```{r}
+dades <- dades %>% separate(Name, c("FamilyName", "FirstName"), sep=", ") %>%
+    separate(FirstName, c("Title", "Name"), sep="\\. ")
+```
+
+
+Inspeccionem quins títols hi ha al dataset:
+
+```{r}
+dades$Title %>% table
+```
+
+Tenim 18 títols diferents, alguns d'ells molt poc representats. Alguns són sinònims en diferent idioma (Mlle = Miss, i Mme = Dona = Mrs = Ms), que podem fusionar. 
+
+També veiem d'atres títols que corresponen a un rang militar (Capt, Col, Major), títols nobiliaris (Sir, Lady, the Countess, Jonkheer - títol nobiliari dels Països Baixos). Tots ells denoten un status social elevat, i en ser pocs, els podem agrupar en una mateixa categoria (Noble). També hi afegirem Dr, que només en tenim 8, i en aquella època també donatava un estatus social elevat.
+
+```{r}
+dades <- dades %>%
+  mutate(Title = case_when(
+    Title == "Mlle" ~ "Miss",
+    Title == "Mme" | Title == "Ms" | Title == "Dona" ~ "Mrs",
+    Title == "Don" ~ "Mr",
+    
+    Title %in% c("Capt", "Col", "Dr", "Jonkheer", "Lady", "Major", "Rev", "Sir", "the Countess") ~ "Noble", 
+    
+    TRUE ~ Title
+  )) 
+
+dades$Title %>% table
+```
+
+En aquest cas no tenim dades perdudes.
+
+## Embarked
+
+Hi ha dos casos de passatgers on no s'ha informat on van embarcar.
+
+```{r}
+table(dades$Embarked, useNA="always")
+```
+
+De nou, canviem el format de string buit a NA per designar les dades perdudes:
+
+```{r}
+dades <- dades %>%
+  mutate(Embarked = as.character(Embarked)) %>%
+  mutate(Embarked = ifelse(Embarked == "", NA, Embarked))
+
+table(dades$Embarked, useNA="always")
+```
+
+
+
+Visualitzem específicament aquests dos registres:
+
+```{r}
+dades %>% filter(is.na(Embarked)) %>%
+    kable() %>% kable_styling(full_width=FALSE)
+```
+
+Observem una cosa interessant: Aquestes dues persones eren de primera classe i compartien la mateixa cabina, malgrat que d'entrada sembla que no tenen parentiu entre elles (SibSp i Parch són 0, i no comparteixen cognom).
+
+Aquest fet sembla estrany per persones que viatgen en primera classe, no sembla normal que comparteixin amb un desconegut.
+
+Una cerca per internet, concertament a l'Enciclopèdia Titanica [2], m'ha donat resposta a aquest misteri: Amelie Icard era la criada de Geroge Nelson Stone. En aquesta mateixa pàgina m'he adonat que hi ha una quantitat important de persones que viatjaven a primera o segona classe en qualitat de criada, cuinera, infermera, etc. I pel que veiem, es van comptabilitzar com que viatjaven soles. Tanmateix, en termes de supervivència, segurament seria més acurat considerar que formaven part d'una unitat familiar. Sense anar més lluny, l'Encliclopèdia Titànica indica que Amelie Icard [va ser rescatada](https://www.encyclopedia-titanica.org/titanic-survivor/amelia-icard.html) del bot salvavides num 6, on va pujar acompanyada de George Nelson Stone.
+
+
+Per tant, a continuació explorem quanta gent compartia cabina, i té un FamSize inferior al nombre d'acompanyants a la cabina:
+
+```{r}
+df_passengers_cabin <- dades %>% 
+  # Eliminem la 3a classe, que ja sabem que majoritàriament viatjaven sols i compartien cabina amb desconeguts.
+  filter(Pclass != 3) %>%
+  group_by(Cabin) %>%
+  summarise(nPassengers = n(), FamSize = sum(FamSize)) %>%
+  filter(nPassengers > 1 & FamSize < nPassengers & Cabin != "")
+
+df_passengers_cabin
+```
+
+Ens trobem amb `r nrow(df_passengers_cabin)` casos, que impliquen `r sum(df_passengers_cabin$nPassengers)` de les cobertes de la B a la F.
+
+Per tant, en els passatgers d'aquestes cabines, els hi sumarem +1 a FamSize:
+
+```{r}
+dades <- dades %>%
+  mutate(FamSize = ifelse(Cabin %in% df_passengers_cabin$Cabin, FamSize+1, FamSize)) 
+
+```
+
+
+Veiem ara que cap d'aquests passatgers té FamSize = 0:
+
+```{r}
+dades %>% 
+  filter(Cabin %in% df_passengers_cabin$Cabin) %>%
+  select(FamilyName, Title, Name, Cabin, FamSize)
+```
+
+
+## Ticket
+
+El format del ticket és una mica difícil d'interpretar, ja que cada port tenia un sistema d'enumeració diferent.
+
+En general, veiem que hi ha 713 números de tiquet que corresponen a una sola perona, mentre que a l'altre extrem, hi ha un tiquet que està associat a 11 persones.
+
+
+```{r}
+dades %>% 
+  group_by(Ticket) %>%
+  summarise(nTickets = n()) %>%
+  arrange(desc(nTickets)) %>%
+  .$nTickets %>% table(useNA = "always")
+
+```
+
+No hi ha valors perduts.
+
+Hi ha alguna relació entre les unitats familiars i el codi del tiquet?
+
+```{r}
+df_tiquet_famsize <- dades %>%
+  group_by(Ticket) %>%
+  # Per cada persona: quanta gent hi ha amb el mateix tiquet que ella? (restem un per eliminar-se a ella mateixa, igual que FamSize)
+  mutate(n_Ticket = n()-1) %>%
+  select(n_Ticket, FamSize) 
+
+# Per quants passatgers FamSize coincideix amb el nre de persones amb el mateix num de Tiquet?
+nrow(df_tiquet_famsize %>% filter(n_Ticket == FamSize))
+
+# Per quants passatgers el FamSize és inferior al numero de persones amb el mateix num de Tiquet?
+nrow(df_tiquet_famsize %>% filter(n_Ticket < FamSize))
+
+# Per quants passatgers el FamSize és superior al numero de persones amb el mateix num de Tiquet?
+nrow(df_tiquet_famsize %>% filter(n_Ticket > FamSize))
+```
+
+Per la gran majoria de persones, el FamSize coincideix amb el número de tiquet. Per contra, tenim uns 300 pels quals no coincideix.
+
+
+```{r}
+df_tiquet_famsize %>% filter(n_Ticket < FamSize)
+```
+
+Explorem, per exemple, la història darrere el tiquet "345764":
+
+Veiem que hi ha dos passatgers amb aquest bitllet. Tenen el mateix cognom, i edat adolescent, per tant semblaria que són germans.
+
+```{r}
+dades %>% filter(Ticket == "345764")
+```
+
+Comprovem si hi ha més passatgers amb el cognom "Vander Planke":
+
+```{r}
+dades %>% filter(FamilyName == "Vander Planke")
+```
+
+Trobem 4 membres que comparteixen cognom. Tal i com suggereix la variable SibSp, en Leo i l'Augusta Maria eren germans d'en Julius, i l'Emelia Maria estava casada amb en Julius. Així ho confirma l'Enciclopedia Titanica [aquí](https://www.encyclopedia-titanica.org/titanic-victim/julius-vanderplancke.html).
+
+Això ens demostra que els tiquets d'una mateixa unitat familiar poden tenir números correlatius, enlloc del mateix número exacte. Potser, el mateix número indica mateixa cabina, i tiquets correlatius indiquen mateixa unitat familiar.
+
+Per poder treballar el Ticket com a número, separarem el codi del tiquet entre el prefix (només hi és a vegades) i el número.
+
+
+```{r}
+dades <- dades %>% 
+  mutate(Ticket = gsub("O 2", "O2", Ticket)) %>%
+  mutate(Ticket = gsub("A. 2.", "A.2.", Ticket)) %>%
+  
+  separate(Ticket, c("TicketPfx", "TicketNr"), sep=" ", remove=F) %>%
+  mutate(TicketNr = ifelse(!is.na(as.numeric(TicketPfx)), TicketPfx, TicketNr)) %>%
+  mutate(TicketPfx = ifelse(!is.na(as.numeric(TicketPfx)), NA, TicketPfx)) %>%
+  mutate(TicketPfx = gsub("\\.", "", TicketPfx)) %>%
+  mutate(TicketNr = as.numeric(trimws(TicketNr)))
+```
+
+
+
+Com a conclusió, la variable Ticket pot ser una variable útil per determinar unitats familiars, i possiblement per poder completar la variable Cabin. Tanmateix, això ho deixo per una anàlisi futura.
+
+
+## Fare
+
+Aquesta variable ens indica quant va pagar cada passatger pel seu tiquet.
+
+```{r}
+sum(is.na(dades$Fare))
+```
+
+```{r}
+sum(which(dades$Fare == ""))
+```
+
+
+Veiem que tenim un sol valor perdut, indicat com a NA.
+
+```{r}
+# Trobem quin és el codi del bitllet pel qual no en sabem el preu
+TicketNA <- dades %>% filter(is.na(Fare)) %>% .$Ticket
+
+# Quants passatgers hi ha amb aquest codi de tiquet?
+filter(dades, Ticket == TicketNA)
+
+```
+
+Es l'únic passatger amb aquest codi de tiquet.
+Veiem que es tracta d'un home de 3a classe, que viatjava sol, i d'edat avançada (per aquella època), i que va embarcar a Southampton.
+
+
+Observem que aquells registres amb un mateix Ticket, també tenen tots el mateix Fare:
+
+```{r}
+dades %>% group_by(Ticket) %>% summarise(nFare = n_distinct(Fare)) %>% arrange(desc(nFare))
+```
+
+Tenim només una excepció, el ticket 7534. Però en ser un únic cas entre els 929 tickets que hi ha a les dades, ho considerarem com un error. Per arreglar-ho, recalculem Fare com la mitjana dels valors de Fare que tenim per cada tiquet.
+
+```{r}
+dades <- dades %>%
+  group_by(Ticket) %>%
+  mutate(Fare = mean(Fare, na.rm=T)) %>%
+  ungroup()
+
+dades %>% group_by(Ticket) %>% summarise(nFare = n_distinct(Fare)) %>% arrange(desc(nFare))
+```
+
+Ha desaparegut l'excepció.
+
+Ara, crearem una variable derivada (FarePers) que sigui el preu per persona:
+
+```{r}
+dades <- dades %>% 
+  group_by(Ticket) %>%
+  mutate(Ticket_nPers = n()) %>%
+  mutate(FarePers = Fare / Ticket_nPers)
+```
+
+
+
+Observem la distribució de la variable:
+
+```{r fig.width=8, fig.height=4}
+ggplot(dades, aes(x=FarePers)) +
+  geom_histogram(fill="darkolivegreen2", colour="darkolivegreen") +
+  theme_classic()
+
+```
+
+La gran majoria de la gent van pagar el rang de preus més baixos, mentre que una minoria va pagar valors molt més elevats. Tenim uns valors extrems sobre 150.
+
+Per curiositat, quines cabines són les que costaven tant car?
+
+```{r}
+dades %>% filter(Fare > 500) %>%
+  select(FamilyName, Title, Name, FamSize, SibSp, Parch, Cabin, Ticket, FarePers, Age)
+```
+
+Correspon a quatre passatgers, dos d'ells ocupaven una suite de tres cabines combinades: Mrs Cardeza de 58 anys, amb Mr Cardeza de 36, casats segons SibSp. 
+
+Segons l'Encicplopedia Titanica, Miss Ward ocupava una de les suites B51 B53 B55 i era la "maid" de Mrs Cardeza. I Mr Cardeza, era el "manservant" de Mr Cardeza.
+
+(Nota: Veiem com Anna Ward i Gustave Lesurer tenen FamSize = 0, malgrat formar part d'una unitat familiar. Amb la transformació anterior no els hem detectat, ja que tenen assignats cabines diferents).
+
+També veiem que hi ha gent que va viatjar gratis, molt probablement gent relacionada amb l'empresa i/o personal.
+
+```{r}
+dades %>% filter(FarePers == 0)
+```
+
+
+
+
+## Resum de l'exploració de les variables
+
+Arribats a aquest punt, fem un petit resum de les transformacions que hem realitzat i el que hem observat per cada variable.
+
+- __Survived__: Tot correcte. Tenim valors perduts (NA) que corresponen als registres que s'han de modelitzar, segons la competició de Kaggle.
+- __Pclass__: També tot correcte, no hi ha valors perduts.
+- __Sex__: Tot correcte, sense valors perduts.
+- __Age__: Aproximadament un 20% de dades perdudes. Discretitzem la variable en intervals de 5 anys (**Age_disc**).
+- __FamSize__: Suma de **SibSp + Parch**. Sense valors perduts. Sumem un membre familiar a aquells passatgers de 1a i 2a classes que estaven compartint cabina amb algú no comptabilitzat com a familiar a Parch o SibSp.
+- __Cabin__: Gran quantitat de dades perdudes, que corresponen majoritàriament a la 2a i 3a classe. Canviem l'string buit per NA per designar-los. Creem la variable derivada **Deck** (primera lletra de la cabina).
+- __Name__: El transformem, separant l'string en **FamilyName**, **Title** i **Name**. Simplifiquem les categories de Title de 18 a 5.
+- __Embarked__: 2 valors perduts. Canviem l'string buit per NA per designar-los.
+- __Ticket__: Sense valors perduts. Hem vist que pot servir per detectar unitats familiars. Hem creat dues variables noves: TicketPfx i TicketNr que separen la part "alfa" i "numèrica".
+- __Fare__: Creem la variable derivada **FarePers**, dividint Fare pel num de passatgers amb el mateix Ticket.
+
+
+
+# Imputació de dades perdudes
+
+Un cop hem explorat cada variable individualment, anem a veure si podem imputar dades perdudes.
+
+
+
+
+## Age_disc
+
+Com que l'edat pot estar relacionada alhora amb diverses variables, fem una imputació multidimensional mitjançant kNN.
+
+
+```{r}
+dadeskNNImp <- VIM::kNN(
+    data = dades %>% select(Age_disc, Pclass, Title, Sex, SibSp, Parch, Cabin),
+    # Variables que necessitem imputar
+    variable = c("Age_disc"),
+    # Utilitzem els 3 veïns més propers
+    k = 20
+)
+
+# Visualitzem els primers registres imputats
+dadeskNNImp %>% filter(Age_disc_imp) %>% as_tibble()
+
+
+```
+
+Veiem que les dades imputades mantenen a grans trets la distribució original, excepte que la categoria de 20 a 25 anys ha crescut molt. Això ens indicaria que aquesta franja d'edat era la menys informada.
+
+```{r fig.width=12, fig.height=4}
+grid.arrange(
+  ggplot(dades, aes(x=Age_disc)) +
+  geom_bar(fill="darkolivegreen2", colour="darkolivegreen") +
+    theme_classic() +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1)),
+
+ggplot(dadeskNNImp, aes(x=Age_disc, fill=Age_disc_imp)) +
+  geom_bar() +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)),
+
+ncol=2
+)
+
+```
+
+Integrem les dades imputades al dataset:
+
+```{r}
+dades <- dades %>%
+  ungroup() %>%
+  mutate(Age_disc = dadeskNNImp$Age_disc,
+         Age_disc_imp = dadeskNNImp$Age_disc_imp)
+```
+
+
+
+## Embarked
+
+Recordem que tenim dos passatgers per qui no tenim el lloc on van embarcar. 
+
+```{r}
+dades %>% filter(is.na(Embarked)) 
+```
+
+Segons l'Enciclopedia Titanica, [Amelie Icard](https://www.encyclopedia-titanica.org/titanic-survivor/amelia-icard.html) i [Martha Evelyn Stone](https://www.encyclopedia-titanica.org/titanic-survivor/martha-evelyn-stone.html) totes dues van embarcar a Southampton.
+
+Com que hem pogut recollir la informació que falta d'una font segura, ja no cal fer una estimació estadística.
+Realitzem la imputació i ens assegurem que ja no tenim més valors perduts.
+
+```{r}
+
+dades <- dades %>%
+  mutate(Embarked = ifelse(is.na(Embarked), "S", Embarked))
+
+sum(is.na(dades$Embarked))
+
+```
+
+
+## FarePers
+
+Tenim un passatger pel qual no en sabem la tarfia que va pagar:
+
+```{r}
+dades %>% filter(is.na(FarePers))
+```
+
+Veiem que era un home gran, que viatjava sol i en tercera classe. No en sabem la cabina, i ningú més compartia el seu núm de tiquet. Per tant, no podem dedudïr directament què va pagar. En aquest cas, semblaria raonable assumir que va pagar la mitjana dels tiquets de tercera classe:
+
+```{r}
+# Calculem el valor mitjà d'un bitllet de 3a classe
+mn3Ticket <- dades %>% filter(Pclass == 3) %>% .$FarePers %>% mean(., na.rm=T)
+
+# Substituim el valor perdut per aquest valor mitjà
+dades <- dades %>%
+  mutate(FarePers = ifelse(is.na(FarePers), mn3Ticket, FarePers))
+
+# Comprovem que s'ha realitzat la imputació
+dades %>% filter(FamilyName == "Storey") %>% select("FamilyName", "Title", "Name", "Pclass", "FarePers")
+
+```
+
+
+
+## Deck
+
+Es una variable amb un percentatge de dades perdudes molt elevat `r sum(is.na(dades$Deck))`. Segurament es podria fer una imputació a partir de diverses variables, com FarePers, Ticket, Embarked, Pclass. Però és una tasca complexa, fora dels objectius d'aquesta pràctica. De moment, doncs, exclouré aquesta variable de l'anàlisi.
+
+
+## Exportació de les dades preprocessades
+
+```{r}
+write.csv(dades, "titanic_preprocessed.csv", row.names=F)
+```
+
+
+
+# Exploració de variables que poden afectar la supervivència
+
+D'entre totes les variables que conté el dataset, considerarem que les que han pogut tenir relació amb la supervivència, i que tenen prou qualitat per incloure en un model predictiu, són:
+
+- Pclass
+- Sex
+- Age_disc
+- FamSize
+- FarePers
+
+A continuació analitzarem, per cada variable, si tenen una relació estadísticament significativa amb la variable Survived.
+
+```{r}
+# Abans de continuar, redefinim els datasets train i test amb les dades que hem preprocessat
+train <- dades %>% filter(Dataset == "train")
+test <- dades %>% filter(Dataset == "test")
+
+```
+
+
+## Variables quantitatives: comparació de mitjanes amb t-test
+
+### Efecte de l'edat en la supervivència
+
+En aquesta primera anàlisi volem esbrinar si l'edat mitjana dels supervivents era significativament diferent dels no supervivents. Per això, farem un test-t de comparació de mitjanes. Les hipòtesis d'aquest test són:
+
+- Hipòtesi nul·la: La mitjana d'edat era la mateixa tant per supervivents com per no supervivents.
+- Hipòtesi alternativa: La mitjana d'edat era diferent entre supervivents i no supervivents.
+
+**Assumpció de la normalitat**: Com que el nostre dataset conté més de 30 mostres tant de supervivents (n = `r sum(train$Survived == 1)`) com de no supervivents (n = `r sum(train$Survived == 0)`), és d'aplicació el teorema del límit central. Aquest teorema ens diu que per n grans (n > 30) la distribució de la mitjana mostral serà aproximadament una normal, independentment de la distribució de la variable original. Per tant, podem considerar que la diferència entre mitjanes segueix una distribució normal estàndard Z ~ N(0,1).
+
+Apliquem el test t:
+
+```{r}
+# Utilitzarem les dades del conjunt "train", ja que és el que té les dades de Survived.
+age_survived1 <- train %>% filter(Survived == 1) %>% .$Age
+age_survived0 <- train %>% filter(Survived == 0) %>% .$Age
+t.test(age_survived1, age_survived0, alternative = "two.sided", paired=F)
+
+```
+
+Per un nivell de significació del 95% (alpha = 0.05) podem rebutjar la hipòtesi nul·la, i acceptem la hipòtesi alternativa. Segons mostren els resultats, podem afirmar que els passatgers que van aconseguir sobreviure eren significativament més joves que els que no van sobreviure, malgrat que per una diferència d'edat petita.
+
+
+### Efecte de la tarifa (FarePers) en la supervivència
+
+Seguint el procediment anterior, comprovarem si supervivents i no supervivents havient pagat, de mitjana, la mateixa tarifa o no.
+
+```{r}
+FarePers_survived1 <- train %>% filter(Survived == 1) %>% .$FarePers
+FarePers_survived0 <- train %>% filter(Survived == 0) %>% .$FarePers
+t.test(FarePers_survived1, FarePers_survived0, alternative = "two.sided", paired=F)
+```
+
+Amb un 95% de confiança, podem rebutjar la hipòtesi nul·la, i concloure que els supervivents havien pagat més per viatjar al Titànic que no pas els no supervivents.
+
+
+## Variables quantitatives: Test chi-quadrat
+
+### Efecte de la classe (Pclass) en la supervivència
+
+A continuació, volem esbrinar si la classe amb la que viatjaven els passatgers va influir en la supervivència de manera significativa. Per això, utilitzarem el test d'independència entre dues variables categòriques Chi-quadrat.
+
+En aquest cas, les hipòtesis del test són:
+
+$H_0:$ Survived i Pclass independents
+
+$H_a:$ Survived i Pclass no són independents
+
+I definim el nivell de significació com:
+
+$\alpha = 0.05$
+
+Primer creem la taula de contingència entre Survived i Pclass, i després hi apliquem el test chi-quadrat:
+
+```{r}
+# Taula de contingència
+dt <- table(train$Survived, train$Pclass)
+
+# Test chi-quadrat
+test_chi <- chisq.test(dt)
+test_chi
+```
+
+Per un nivell de confiança del 95%, rebutgem la hipòtesi nul·la i concloem que no tenim prou evidències per afirmar que les variables Survived i Pclass siguin independents. Es a dir, Survived està correlacionat amb Pclass.
+
+A continuació podem examinar els residus de pearson per veure quines cel·les contribueixen més a la correlació:
+
+
+```{r fig.width=5, fig.height=5}
+
+corrplot(test_chi$residuals, is.cor = FALSE)
+```
+
+
+Veiem que el que determinava més era ser a primera o tercera classe, és a dir, els casos extrems. Els residus positius (de color blau), indiquen una correlació positiva, i els negatius (en vermell) una correlació negativa. Veiem, doncs, que la tercera classe està positivament correlacionada amb no sobreviure, i negativament relacionada amb sobreviure; mentre que a primera classe s'observa el contrari.
+
+En definitiva, la supervivència està relacionada amb la primera classe, i la no supervivència amb la tercera classe. Mentre que la segona classe manté una correlació més dèbil amb el fet de sobreviure o no.
+
+### Efecte del gènere en la supervivència
+
+Ara seguirem el mateix procediment que en l'apartat anterior, per determinar la relació entre el gènere i la supervivència.
+
+```{r}
+# Taula de contingència
+dt <- table(train$Survived, train$Sex)
+
+# Test chi-quadrat
+test_chi <- chisq.test(dt)
+test_chi
+```
+
+
+```{r fig.width=5, fig.height=5}
+
+corrplot(test_chi$residuals, is.cor = FALSE)
+```
+
+Ser dona està correlacionat positivament amb sobreviure, mentre que ser home està correlacionat positivament amb no sobreviure.
+
+
+### Efecte de la mida de les unitats familiars (FamSize) en la supervivència
+
+```{r}
+# Taula de contingència
+dt <- table(train$Survived, train$FamSize)
+
+# Test chi-quadrat
+test_chi <- chisq.test(dt)
+test_chi
+```
+
+```{r fig.width=5, fig.height=5}
+
+corrplot(test_chi$residuals, is.cor = FALSE)
+```
+
+
+
+
+# Predicció de la supervivència: Regressió logística
+
+Finalment, volem analitzar com les diverses variables conjuntament van determinar la possibilitat de sobreviure o no durant el naufragi del Titànic. Utilitzarem un model de regressió logística per predir la variable Survived. Com a variables explicatives, utilitzarem totes les variables explorades anteriorment, ja que totes han mostrat una relació significativa amb la variable Survived:
+
+- Pclass
+- Sex
+- Age_disc
+- FamSize
+- FarePers
+
+Primer de tot, separem les dades pre-processades en els conjunts train i test originals. Utilitzarem les dades train per entrenar els models.
+
+```{r}
+
+dades_train <- dades %>%
+  filter(Dataset == "train")  
+
+dades_test <- dades %>%
+  filter(Dataset == "test") 
+
+```
+
+
+Creem ara diversos models de regressió logística de complexitat creixent.
+
+```{r}
+Mlog1 <- glm(Survived ~ Pclass, data = dades_train, family = binomial(link='logit'))
+Mlog2 <- glm(Survived ~ Pclass + Sex, data = dades_train, family = binomial(link='logit'))
+Mlog3 <- glm(Survived ~ Pclass + Sex + Age_disc, data = dades_train, family = binomial(link='logit'))
+Mlog4 <- glm(Survived ~ Pclass + Sex + Age_disc + FamSize, data = dades_train, family = binomial(link='logit'))
+Mlog5 <- glm(Survived ~ Pclass + Sex + Age_disc + FamSize + FarePers, data = dades_train, family = binomial(link='logit'))
+
+```
+
+Comparem els models entre ells mitjançant l'estadístic AIC, i considerem com a "millor" model aquell que tingui el menor AIC.
+
+```{r}
+AIC(Mlog5)
+AIC(Mlog4)
+AIC(Mlog3)
+AIC(Mlog2)
+AIC(Mlog1)
+```
+
+Veiem que el millor model és el més complex, amb 5 variables explicatives:
+
+```{r}
+summary(Mlog5)
+```
+
+Podem veure que la majoria de coeficients tenen un alt nivell de significació. L'excepció serien els factors d'edat més avançada (dels 65 anys cap amunt) o més jove (dels 15 anys en avall), viatjar en 2a classe, i la tarifa de viatge.
+
+**Validació**
+
+```{r}
+# Barregem aleatòriament les files de dades_train
+dades_val <- sample_n(dades_train, nrow(dades_train), replace=F)
+
+idx_val1 <- c(1:178)
+idx_val2 <- c(179:356)
+idx_val3 <- c(357:534)
+idx_val4 <- c(535:713)
+idx_val5 <- c(714:891)
+
+```
+
+
+
+Predicció amb les dades **train**
+
+```{r}
+
+percentatge_encerts <- function(indices){
+  predTrain <- predict(Mlog5, dades_train[-indices,], type = "response")
+
+  dades_train_pr <- dades_train[-indices,] %>%
+    mutate(Survived_pr = predTrain) %>%
+    mutate(Survived_pr = ifelse(Survived_pr > 0.5, 1, 0)) %>%
+    mutate(Pr_match = Survived == Survived_pr)
+
+  # Confusion matrix
+  conf_matrix <- table(dades_train_pr$Survived, dades_train_pr$Survived_pr)
+
+  # % d'encerts
+  sum(diag(conf_matrix)) * 100 / sum(conf_matrix)
+}
+
+percentatge_encerts(idx_val1)
+percentatge_encerts(idx_val2)
+percentatge_encerts(idx_val3)
+percentatge_encerts(idx_val4)
+percentatge_encerts(idx_val5)
+
+
+
+```
+
+Veiem que en totes les particions de les dades, tenim un percentatge d'encerts molt estable vora el 80%. 
+
+
+
+# Predicció amb les dades "test" de kaggle
+
+Finalment, utilitzem el model construït per predir la supervivència del conjunt de dades test:
+
+```{r}
+pred_test <- predict(Mlog5, dades_test, type = "response")
+pred_test <- ifelse(pred_test > 0.5, 1, 0)
+head(pred_test, 20)
+```
+
+Exportem el fitxer amb les prediccions, segons el format requerit per Kaggle:
+
+```{r}
+result <- test %>% select(PassengerId) %>%
+  mutate(Survived = pred_test)
+
+head(result)
+
+write.csv(result, "kaggle_submission.csv", row.names=F)
+```
+
+
+
+
+
+# Conclusions
+
+Al llarg d'aquesta anàlisi hem explorat la influència que van tenir diferents variables en la supervivència dels passatgers del Titànic durant el seu naufragi. Hem començat explorant cada variable per separat, fent transformacions (discretització), imputacions (kNN, substitució per la mitjana, consulta de fonts d'informació externa) per tal de preparar les dades pel seu posterior anàlisi.
+
+A continuació, s'han identificat aquelles variables que intuïtivament podrien tenir un efecte significatiu sobre la supervivència. Per cadascuna d'elles, s'ha fet un test estadístic per determinar si hi havia un efecte estadísitc significatiu. Totes les variables analitzades han mostrat un efecte significatiu. Específicament, s'ha vist que els factors que afavorien la supervivència eren: viatjar en primera classe, ser dona, ser jove, haver pagat més per viatjar, formar part d'una unitat familiar d'entre 2 i 4 persones (tenir d'1 a 3 acompanyants).
+
+Finalment, aquestes variables s'han utilitzat per constuir un model de regressió logística per predir la variable Survived. Una validació "5-fold cross validation" suggereix que el model té una capacitat predictiva del 80%.
+
+Al llarg de l'anàlisi també hem vist que hi ha marge per millorar aquest model. Per exemple, la mida de les unitats familiars es podria afinar més, reconeguent als que viatjaven en qualitat de personal (criats, infermeres, cuiners, etc) la pertinença a les famílies amb les quals viatjaven.
+També, les variables Deck i Cabin tenen molt de potencial per explicara la supervivència al Titànic, ja que estan relacionades amb l'accés a les sortides cap als bots salvavides. Un estudi per imputar aquestes variables podria ser molt útil.
+
+
+
+
+
+# Bibliografia
+
+[1] RMS Titanic, Wikipecia. https://ca.wikipedia.org/wiki/RMS_Titanic
+
+
+[2] Encyclopedia Titanica (2004) Cabin Allocations (ref: #3216, published 18 July 2004, generated 22nd May 2020 09:54:03 AM); URL : https://www.encyclopedia-titanica.org/cabins.html (darrer accés: 24/05/2020)
+
+
+
+# Taula de contribucions
+
+```{r echo=FALSE}
+tibble(
+  Contribucions = c("Investigació prèvia", "Redacció de les respostes", "Desenvolupament del codi"),
+  Firma = rep("EEG", 3)
+) %>% kable %>% kable_styling(full_width=F)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
