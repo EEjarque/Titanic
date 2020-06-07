@@ -38,13 +38,13 @@ L'objectiu de l'anàlisi és entendre els factors que van determinar la superviv
 
 Les dades inclouen les següents variables:
 
-- **PassengerId:** Identificador únic de cada passatger. L'utilitzarem per tornar a desmuntar més tard el conjunt de dades en train/test segons les dades originals facilitades per kaggle.
+- **PassengerId:** Identificador únic de cada passatger. 
 
-- **Survived:** Variable binària, indicant si el passatger ha sobreviscut o no. Es la variable que s'ha de predir.
+- **Survived:** Variable binària, indicant si el passatger ha sobreviscut (1) o no (0). 
 
-- **Pclass:** En quina classe viatjava el passatger (1, 2 o 3)
+- **Pclass:** En quina classe viatjava el passatger (1, 2 o 3).
 
-- **Name:** Nom del passatger. El format és: Cognom + coma + títol + nom + sobrenom en parèntesis. Aquesta estructura es pot utilitzar per subdividir aquesta variable en Cognom, Títol, Nom.
+- **Name:** Nom del passatger. El format és: Cognom + coma + títol + nom + sobrenom en parèntesis. Aquesta estructura fixa es pot utilitzar per subdividir aquesta variable en Cognom, Títol, Nom.
 
 - **Sex:** Si el passatger era dona (female) o home (male).
 
@@ -173,7 +173,7 @@ ggplot(dades %>% filter(!is.na(Survived)), aes(x=Sex, fill=Survived)) +
 
 ## Age
 
-La mediana de l'edat dels passatgers era `r median(dades$Age, na.rm=T)` i la mitjana `r mean(dades$Age, na.rm=T)`. També veiem que les edats més freqüents són entre els 20 i 30 anys.
+La mediana de l'edat dels passatgers era `r median(dades$Age, na.rm=T)` i la mitjana `r round(mean(dades$Age, na.rm=T),3)`. També veiem que les edats més freqüents són entre els 20 i 30 anys.
 
 ```{r}
 
@@ -340,7 +340,7 @@ ggplot(dades %>% filter(!is.na(Survived)), aes(x=Deck, fill=Survived)) +
 
 ## Name
 
-La variable Name l'hem reorganitzat en FamilyName, Title i Name. Title i FamilyName podrien ser útils per reconstruir l'edat dels passatgers i relacions de parentiu.
+La variable Name la reorganitzem en FamilyName, Title i Name. Title i FamilyName podrien ser útils per reconstruir l'edat dels passatgers i relacions de parentiu.
 
 ```{r}
 dades <- dades %>% separate(Name, c("FamilyName", "FirstName"), sep=", ") %>%
@@ -356,7 +356,7 @@ dades$Title %>% table
 
 Tenim 18 títols diferents, alguns d'ells molt poc representats. Alguns són sinònims en diferent idioma (Mlle = Miss, i Mme = Dona = Mrs = Ms), que podem fusionar. 
 
-També veiem d'atres títols que corresponen a un rang militar (Capt, Col, Major), títols nobiliaris (Sir, Lady, the Countess, Jonkheer - títol nobiliari dels Països Baixos). Tots ells denoten un status social elevat, i en ser pocs, els podem agrupar en una mateixa categoria (Noble). També hi afegirem Dr, que només en tenim 8, i en aquella època també donatava un estatus social elevat.
+També veiem d'atres títols que corresponen a un rang militar (Capt, Col, Major), títols nobiliaris (Sir, Lady, the Countess, Jonkheer - títol nobiliari dels Països Baixos). Tots ells denoten un status social elevat, i en ser pocs, els podem agrupar en una mateixa categoria (Noble). També hi afegirem Dr, que només en tenim 8, i en aquella època també denatava un estatus social elevat.
 
 ```{r}
 dades <- dades %>%
@@ -422,7 +422,7 @@ df_passengers_cabin <- dades %>%
 df_passengers_cabin
 ```
 
-Ens trobem amb `r nrow(df_passengers_cabin)` casos, que impliquen `r sum(df_passengers_cabin$nPassengers)` de les cobertes de la B a la F.
+Ens trobem amb `r nrow(df_passengers_cabin)` casos, que impliquen les cobertes de la B a la F.
 
 Per tant, en els passatgers d'aquestes cabines, els hi sumarem +1 a FamSize:
 
@@ -433,7 +433,7 @@ dades <- dades %>%
 ```
 
 
-Veiem ara que cap d'aquests passatgers té FamSize = 0:
+Comprovem ara que cap d'aquests passatgers té FamSize = 0:
 
 ```{r}
 dades %>% 
@@ -446,7 +446,7 @@ dades %>%
 
 El format del ticket és una mica difícil d'interpretar, ja que cada port tenia un sistema d'enumeració diferent.
 
-En general, veiem que hi ha 713 números de tiquet que corresponen a una sola perona, mentre que a l'altre extrem, hi ha un tiquet que està associat a 11 persones.
+En general, veiem que hi ha 713 números de tiquet que corresponen a una sola perona, mentre que a l'altre extrem, hi ha un tiquet que està associat a 11 persones (encaixa amb la mida de la unitat familiar més gran que viatjava al Titànic).
 
 
 ```{r}
@@ -479,7 +479,7 @@ nrow(df_tiquet_famsize %>% filter(n_Ticket < FamSize))
 nrow(df_tiquet_famsize %>% filter(n_Ticket > FamSize))
 ```
 
-Per la gran majoria de persones, el FamSize coincideix amb el número de tiquet. Per contra, tenim uns 300 pels quals no coincideix.
+Per la gran majoria de persones, el FamSize coincideix amb el número de tiquet. Per contra, en tenim uns 300 pels quals no coincideix.
 
 
 ```{r}
@@ -521,12 +521,13 @@ dades <- dades %>%
 
 
 
-Com a conclusió, la variable Ticket pot ser una variable útil per determinar unitats familiars, i possiblement per poder completar la variable Cabin. Tanmateix, això ho deixo per una anàlisi futura.
+Com a conclusió, la variable Ticket té potencial per afinar la variable FamSize i possiblement per completar la variable cabin. Tanmateix la relació no és clara, i entrar-hi en detall podria ser l'objecte d'un estudi a part.
+
 
 
 ## Fare
 
-Aquesta variable ens indica quant va pagar cada passatger pel seu tiquet.
+Aquesta variable ens indica quant va costar cada ticket.
 
 ```{r}
 sum(is.na(dades$Fare))
@@ -552,13 +553,13 @@ Es l'únic passatger amb aquest codi de tiquet.
 Veiem que es tracta d'un home de 3a classe, que viatjava sol, i d'edat avançada (per aquella època), i que va embarcar a Southampton.
 
 
-Observem que aquells registres amb un mateix Ticket, també tenen tots el mateix Fare:
+Observem que aquells registres amb un mateix Ticket, també tenen tots el mateix Fare. Així és d'esperar, ja que Fare correspon al total pagat per cada tiquet (encara que inclogui múltiples persones).
 
 ```{r}
 dades %>% group_by(Ticket) %>% summarise(nFare = n_distinct(Fare)) %>% arrange(desc(nFare))
 ```
 
-Tenim només una excepció, el ticket 7534. Però en ser un únic cas entre els 929 tickets que hi ha a les dades, ho considerarem com un error. Per arreglar-ho, recalculem Fare com la mitjana dels valors de Fare que tenim per cada tiquet.
+Tenim només una excepció, el ticket 7534. Però en ser un únic cas entre els 929 tickets que hi ha a les dades, ho considerarem com un error. Per arreglar-ho, recalculem Fare com la mitjana dels dos valors:
 
 ```{r}
 dades <- dades %>%
@@ -739,7 +740,7 @@ dades %>% filter(FamilyName == "Storey") %>% select("FamilyName", "Title", "Name
 
 ## Deck
 
-Es una variable amb un percentatge de dades perdudes molt elevat `r sum(is.na(dades$Deck))`. Segurament es podria fer una imputació a partir de diverses variables, com FarePers, Ticket, Embarked, Pclass. Però és una tasca complexa, fora dels objectius d'aquesta pràctica. De moment, doncs, exclouré aquesta variable de l'anàlisi.
+Es una variable amb un percentatge de dades perdudes molt elevat `r round(sum(is.na(dades$Deck))/nrow(dades)*100,1)`. Segurament es podria fer una imputació a partir de diverses variables, com FarePers, Ticket, Embarked, Pclass. Però és una tasca complexa, fora dels objectius d'aquesta pràctica. De moment, doncs, exclouré aquesta variable de l'anàlisi.
 
 
 ## Exportació de les dades preprocessades
@@ -807,7 +808,7 @@ t.test(FarePers_survived1, FarePers_survived0, alternative = "two.sided", paired
 Amb un 95% de confiança, podem rebutjar la hipòtesi nul·la, i concloure que els supervivents havien pagat més per viatjar al Titànic que no pas els no supervivents.
 
 
-## Variables quantitatives: Test chi-quadrat
+## Variables qualitatives: Test chi-quadrat
 
 ### Efecte de la classe (Pclass) en la supervivència
 
@@ -862,6 +863,7 @@ test_chi <- chisq.test(dt)
 test_chi
 ```
 
+Per un nivell de confiança del 95% podem rebutjar la hipòtesi nul·la i concloem que Sex i Survival no són independents.
 
 ```{r fig.width=5, fig.height=5}
 
@@ -873,6 +875,8 @@ Ser dona està correlacionat positivament amb sobreviure, mentre que ser home es
 
 ### Efecte de la mida de les unitats familiars (FamSize) en la supervivència
 
+Finalment, repetirem el procediment del test chi-quadrat per determinar la relació entre la mida de la unitat familiar i el fet de sobreviure:
+
 ```{r}
 # Taula de contingència
 dt <- table(train$Survived, train$FamSize)
@@ -882,11 +886,14 @@ test_chi <- chisq.test(dt)
 test_chi
 ```
 
+De nou, per un nivell de confiança del 95% podem rebutjar la hipòtesi nul·la i concloem que les dues variables no són independents.
+
 ```{r fig.width=5, fig.height=5}
 
 corrplot(test_chi$residuals, is.cor = FALSE)
 ```
 
+Els resultats mostren que les mides familiars més contribueixen a la correlació són aquelles entre 0 i 3. Tenir entre 1 i 3 acompanyants està correlacionat amb sobreviure, mentre viatjar sol, apareix correlacionat amb no sobreviure.
 
 
 
@@ -1037,10 +1044,10 @@ Al llarg d'aquesta anàlisi hem explorat la influència que van tenir diferents 
 
 A continuació, s'han identificat aquelles variables que intuïtivament podrien tenir un efecte significatiu sobre la supervivència. Per cadascuna d'elles, s'ha fet un test estadístic per determinar si hi havia un efecte estadísitc significatiu. Totes les variables analitzades han mostrat un efecte significatiu. Específicament, s'ha vist que els factors que afavorien la supervivència eren: viatjar en primera classe, ser dona, ser jove, haver pagat més per viatjar, formar part d'una unitat familiar d'entre 2 i 4 persones (tenir d'1 a 3 acompanyants).
 
-Finalment, aquestes variables s'han utilitzat per constuir un model de regressió logística per predir la variable Survived. Una validació "5-fold cross validation" suggereix que el model té una capacitat predictiva del 80%.
+Finalment, aquestes variables s'han utilitzat per constuir un model de regressió logística per predir la variable Survived. Una validació "5-fold cross validation" suggereix que el model té una capacitat predictiva del 81%.
 
 Al llarg de l'anàlisi també hem vist que hi ha marge per millorar aquest model. Per exemple, la mida de les unitats familiars es podria afinar més, reconeguent als que viatjaven en qualitat de personal (criats, infermeres, cuiners, etc) la pertinença a les famílies amb les quals viatjaven.
-També, les variables Deck i Cabin tenen molt de potencial per explicara la supervivència al Titànic, ja que estan relacionades amb l'accés a les sortides cap als bots salvavides. Un estudi per imputar aquestes variables podria ser molt útil.
+També, les variables Deck i Cabin tenen molt de potencial per explicara la supervivència al Titànic, ja que estan relacionades amb l'accés a les sortides cap als bots salvavides. Un estudi per imputar aquestes variables podria ser molt útil. Finalment, la variable FarePers s'ha tractat com a variable contínua, i contenia algun valor extrem. Una discretització d'aquesta variable podria donar millors resultats en la capacitat predictiva del model.
 
 
 
@@ -1048,10 +1055,10 @@ També, les variables Deck i Cabin tenen molt de potencial per explicara la supe
 
 # Bibliografia
 
-[1] RMS Titanic, Wikipecia. https://ca.wikipedia.org/wiki/RMS_Titanic
+[1] RMS Titanic, Wikipecia. https://ca.wikipedia.org/wiki/RMS_Titanic (darrer accés: 07/06/2020)
 
 
-[2] Encyclopedia Titanica (2004) Cabin Allocations (ref: #3216, published 18 July 2004, generated 22nd May 2020 09:54:03 AM); URL : https://www.encyclopedia-titanica.org/cabins.html (darrer accés: 24/05/2020)
+[2] Encyclopedia Titanica (2004) Cabin Allocations (ref: #3216, published 18 July 2004, generated 22nd May 2020 09:54:03 AM); URL : https://www.encyclopedia-titanica.org/cabins.html (darrer accés: 07/06/2020)
 
 
 
