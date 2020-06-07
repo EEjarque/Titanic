@@ -47,7 +47,7 @@
 46,"0","3","Rogers","Mr","William John","male",NA,0,0,"S.C./A.4. 23567","SC/A4",23567,8.05,NA,"S","train","(20,25]",0,NA,1,8.05,TRUE
 47,"0","3","Lennon","Mr","Denis","male",NA,1,0,"370371",NA,370371,15.5,NA,"Q","train","(20,25]",1,NA,2,7.75,TRUE
 48,"1","3","O'Driscoll","Miss","Bridget","female",NA,0,0,"14311",NA,14311,7.75,NA,"Q","train","(20,25]",0,NA,1,7.75,TRUE
-49,"0","3","Samaan","Mr","Youssef","male",NA,2,0,"2662",NA,2662,21.6792,NA,"C","train","(20,25]",2,NA,3,7.2264,TRUE
+49,"0","3","Samaan","Mr","Youssef","male",NA,2,0,"2662",NA,2662,21.6792,NA,"C","train","(25,30]",2,NA,3,7.2264,TRUE
 50,"0","3","Arnold-Franchi","Mrs","Josef (Josefine Franchi)","female",18,1,0,"349237",NA,349237,17.8,NA,"S","train","(15,20]",1,NA,2,8.9,FALSE
 51,"0","3","Panula","Master","Juha Niilo","male",7,4,1,"3101295",NA,3101295,39.6875,NA,"S","train","(5,10]",5,NA,7,5.66964285714286,FALSE
 52,"0","3","Nosworthy","Mr","Richard Cater","male",21,0,0,"A/4. 39886","A/4",39886,7.8,NA,"S","train","(20,25]",0,NA,1,7.8,FALSE
@@ -108,7 +108,7 @@
 107,"1","3","Salkjelsvik","Miss","Anna Kristine","female",21,0,0,"343120",NA,343120,7.65,NA,"S","train","(20,25]",0,NA,1,7.65,FALSE
 108,"1","3","Moss","Mr","Albert Johan","male",NA,0,0,"312991",NA,312991,7.775,NA,"S","train","(20,25]",0,NA,1,7.775,TRUE
 109,"0","3","Rekic","Mr","Tido","male",38,0,0,"349249",NA,349249,7.8958,NA,"S","train","(35,40]",0,NA,1,7.8958,FALSE
-110,"1","3","Moran","Miss","Bertha","female",NA,1,0,"371110",NA,371110,24.15,NA,"Q","train","(20,25]",1,NA,3,8.05,TRUE
+110,"1","3","Moran","Miss","Bertha","female",NA,1,0,"371110",NA,371110,24.15,NA,"Q","train","(15,20]",1,NA,3,8.05,TRUE
 111,"0","1","Porter","Mr","Walter Chamberlain","male",47,0,0,"110465",NA,110465,52,"C110","S","train","(45,50]",0,"C",2,26,FALSE
 112,"0","3","Zabour","Miss","Hileni","female",14.5,1,0,"2665",NA,2665,14.4542,NA,"C","train","(10,15]",1,NA,2,7.2271,FALSE
 113,"0","3","Barton","Mr","David John","male",22,0,0,"324669",NA,324669,8.05,NA,"S","train","(20,25]",0,NA,1,8.05,FALSE
@@ -165,7 +165,7 @@
 164,"0","3","Calic","Mr","Jovo","male",17,0,0,"315093",NA,315093,8.6625,NA,"S","train","(15,20]",0,NA,1,8.6625,FALSE
 165,"0","3","Panula","Master","Eino Viljami","male",1,4,1,"3101295",NA,3101295,39.6875,NA,"S","train","(0,5]",5,NA,7,5.66964285714286,FALSE
 166,"1","3","Goldsmith","Master","Frank John William ""Frankie""","male",9,0,2,"363291",NA,363291,20.525,NA,"S","train","(5,10]",2,NA,3,6.84166666666667,FALSE
-167,"1","1","Chibnall","Mrs","(Edith Martha Bowerman)","female",NA,0,1,"113505",NA,113505,55,"E33","S","train","(40,45]",1,"E",2,27.5,TRUE
+167,"1","1","Chibnall","Mrs","(Edith Martha Bowerman)","female",NA,0,1,"113505",NA,113505,55,"E33","S","train","(20,25]",1,"E",2,27.5,TRUE
 168,"0","3","Skoog","Mrs","William (Anna Bernhardina Karlsson)","female",45,1,4,"347088",NA,347088,27.9,NA,"S","train","(40,45]",5,NA,6,4.65,FALSE
 169,"0","1","Baumann","Mr","John D","male",NA,0,0,"PC 17318","PC",17318,25.925,NA,"S","train","(20,25]",0,NA,1,25.925,TRUE
 170,"0","3","Ling","Mr","Lee","male",28,0,0,"1601",NA,1601,56.4958,NA,"S","train","(25,30]",0,NA,8,7.061975,FALSE
@@ -175,17 +175,17 @@
 174,"0","3","Sivola","Mr","Antti Wilhelm","male",21,0,0,"STON/O2. 3101280","STON/O2",3101280,7.925,NA,"S","train","(20,25]",0,NA,1,7.925,FALSE
 175,"0","1","Smith","Mr","James Clinch","male",56,0,0,"17764",NA,17764,30.6958,"A7","C","train","(55,60]",0,"A",1,30.6958,FALSE
 176,"0","3","Klasen","Mr","Klas Albin","male",18,1,1,"350404",NA,350404,7.8542,NA,"S","train","(15,20]",2,NA,1,7.8542,FALSE
-177,"0","3","Lefebre","Master","Henry Forbes","male",NA,3,1,"4133",NA,4133,25.4667,NA,"S","train","(5,10]",4,NA,5,5.09334,TRUE
+177,"0","3","Lefebre","Master","Henry Forbes","male",NA,3,1,"4133",NA,4133,25.4667,NA,"S","train","(0,5]",4,NA,5,5.09334,TRUE
 178,"0","1","Isham","Miss","Ann Elizabeth","female",50,0,0,"PC 17595","PC",17595,28.7125,"C49","C","train","(45,50]",0,"C",1,28.7125,FALSE
 179,"0","2","Hale","Mr","Reginald","male",30,0,0,"250653",NA,250653,13,NA,"S","train","(25,30]",0,NA,1,13,FALSE
 180,"0","3","Leonard","Mr","Lionel","male",36,0,0,"LINE","LINE",NA,0,NA,"S","train","(35,40]",0,NA,4,0,FALSE
 181,"0","3","Sage","Miss","Constance Gladys","female",NA,8,2,"CA.2.43","CA243",NA,69.55,NA,"S","train","(0,5]",10,NA,11,6.32272727272727,TRUE
-182,"0","2","Pernot","Mr","Rene","male",NA,0,0,"SC/PARIS 2131","SC/PARIS",2131,15.05,NA,"C","train","(20,25]",0,NA,1,15.05,TRUE
+182,"0","2","Pernot","Mr","Rene","male",NA,0,0,"SC/PARIS 2131","SC/PARIS",2131,15.05,NA,"C","train","(25,30]",0,NA,1,15.05,TRUE
 183,"0","3","Asplund","Master","Clarence Gustaf Hugo","male",9,4,2,"347077",NA,347077,31.3875,NA,"S","train","(5,10]",6,NA,7,4.48392857142857,FALSE
 184,"1","2","Becker","Master","Richard F","male",1,2,1,"230136",NA,230136,39,"F4","S","train","(0,5]",3,"F",4,9.75,FALSE
 185,"1","3","Kink-Heilmann","Miss","Luise Gretchen","female",4,0,2,"315153",NA,315153,22.025,NA,"S","train","(0,5]",2,NA,3,7.34166666666667,FALSE
 186,"0","1","Rood","Mr","Hugh Roscoe","male",NA,0,0,"113767",NA,113767,50,"A32","S","train","(25,30]",0,"A",1,50,TRUE
-187,"1","3","O'Brien","Mrs","Thomas (Johanna ""Hannah"" Godfrey)","female",NA,1,0,"370365",NA,370365,15.5,NA,"Q","train","(15,20]",1,NA,2,7.75,TRUE
+187,"1","3","O'Brien","Mrs","Thomas (Johanna ""Hannah"" Godfrey)","female",NA,1,0,"370365",NA,370365,15.5,NA,"Q","train","(20,25]",1,NA,2,7.75,TRUE
 188,"1","1","Romaine","Mr","Charles Hallace (""Mr C Rolmane"")","male",45,0,0,"111428",NA,111428,26.55,NA,"S","train","(40,45]",0,NA,1,26.55,FALSE
 189,"0","3","Bourke","Mr","John","male",40,1,1,"364849",NA,364849,15.5,NA,"Q","train","(35,40]",2,NA,2,7.75,FALSE
 190,"0","3","Turcin","Mr","Stjepan","male",36,0,0,"349247",NA,349247,7.8958,NA,"S","train","(35,40]",0,NA,1,7.8958,FALSE
@@ -213,7 +213,7 @@
 212,"1","2","Cameron","Miss","Clear Annie","female",35,0,0,"F.C.C. 13528","FCC",13528,21,NA,"S","train","(30,35]",0,NA,2,10.5,FALSE
 213,"0","3","Perkin","Mr","John Henry","male",22,0,0,"A/5 21174","A/5",21174,7.25,NA,"S","train","(20,25]",0,NA,1,7.25,FALSE
 214,"0","2","Givard","Mr","Hans Kristensen","male",30,0,0,"250646",NA,250646,13,NA,"S","train","(25,30]",0,NA,1,13,FALSE
-215,"0","3","Kiernan","Mr","Philip","male",NA,1,0,"367229",NA,367229,7.75,NA,"Q","train","(20,25]",1,NA,1,7.75,TRUE
+215,"0","3","Kiernan","Mr","Philip","male",NA,1,0,"367229",NA,367229,7.75,NA,"Q","train","(25,30]",1,NA,1,7.75,TRUE
 216,"1","1","Newell","Miss","Madeleine","female",31,1,0,"35273",NA,35273,113.275,"D36","C","train","(30,35]",1,"D",3,37.7583333333333,FALSE
 217,"1","3","Honkanen","Miss","Eliina","female",27,0,0,"STON/O2. 3101283","STON/O2",3101283,7.925,NA,"S","train","(25,30]",0,NA,1,7.925,FALSE
 218,"0","2","Jacobsohn","Mr","Sidney Samuel","male",42,1,0,"243847",NA,243847,27,NA,"S","train","(40,45]",1,NA,2,13.5,FALSE
@@ -240,7 +240,7 @@
 239,"0","2","Pengelly","Mr","Frederick William","male",19,0,0,"28665",NA,28665,10.5,NA,"S","train","(15,20]",0,NA,1,10.5,FALSE
 240,"0","2","Hunt","Mr","George Henry","male",33,0,0,"SCO/W 1585","SCO/W",1585,12.275,NA,"S","train","(30,35]",0,NA,1,12.275,FALSE
 241,"0","3","Zabour","Miss","Thamine","female",NA,1,0,"2665",NA,2665,14.4542,NA,"C","train","(15,20]",1,NA,2,7.2271,TRUE
-242,"1","3","Murphy","Miss","Katherine ""Kate""","female",NA,1,0,"367230",NA,367230,15.5,NA,"Q","train","(15,20]",1,NA,2,7.75,TRUE
+242,"1","3","Murphy","Miss","Katherine ""Kate""","female",NA,1,0,"367230",NA,367230,15.5,NA,"Q","train","(20,25]",1,NA,2,7.75,TRUE
 243,"0","2","Coleridge","Mr","Reginald Charles","male",29,0,0,"W./C. 14263","W/C",14263,10.5,NA,"S","train","(25,30]",0,NA,1,10.5,FALSE
 244,"0","3","Maenpaa","Mr","Matti Alexanteri","male",22,0,0,"STON/O2. 3101275","STON/O2",3101275,7.125,NA,"S","train","(20,25]",0,NA,1,7.125,FALSE
 245,"0","3","Attalah","Mr","Sleiman","male",30,0,0,"2694",NA,2694,7.225,NA,"C","train","(25,30]",0,NA,1,7.225,FALSE
@@ -346,7 +346,7 @@
 345,"0","2","Fox","Mr","Stanley Hubert","male",36,0,0,"229236",NA,229236,13,NA,"S","train","(35,40]",0,NA,1,13,FALSE
 346,"1","2","Brown","Miss","Amelia ""Mildred""","female",24,0,0,"248733",NA,248733,13,"F33","S","train","(20,25]",1,"F",1,13,FALSE
 347,"1","2","Smith","Miss","Marion Elsie","female",40,0,0,"31418",NA,31418,13,NA,"S","train","(35,40]",0,NA,1,13,FALSE
-348,"1","3","Davison","Mrs","Thomas Henry (Mary E Finck)","female",NA,1,0,"386525",NA,386525,16.1,NA,"S","train","(20,25]",1,NA,2,8.05,TRUE
+348,"1","3","Davison","Mrs","Thomas Henry (Mary E Finck)","female",NA,1,0,"386525",NA,386525,16.1,NA,"S","train","(15,20]",1,NA,2,8.05,TRUE
 349,"1","3","Coutts","Master","William Loch ""William""","male",3,1,1,"C.A. 37671","CA",37671,15.9,NA,"S","train","(0,5]",2,NA,3,5.3,FALSE
 350,"0","3","Dimic","Mr","Jovan","male",42,0,0,"315088",NA,315088,8.6625,NA,"S","train","(40,45]",0,NA,1,8.6625,FALSE
 351,"0","3","Odahl","Mr","Nils Martin","male",23,0,0,"7267",NA,7267,9.225,NA,"S","train","(20,25]",0,NA,1,9.225,FALSE
@@ -363,7 +363,7 @@
 362,"0","2","del Carlo","Mr","Sebastiano","male",29,1,0,"SC/PARIS 2167","SC/PARIS",2167,27.7208,NA,"C","train","(25,30]",1,NA,2,13.8604,FALSE
 363,"0","3","Barbara","Mrs","(Catherine David)","female",45,0,1,"2691",NA,2691,14.4542,NA,"C","train","(40,45]",1,NA,2,7.2271,FALSE
 364,"0","3","Asim","Mr","Adola","male",35,0,0,"SOTON/O.Q. 3101310","SOTON/OQ",3101310,7.05,NA,"S","train","(30,35]",0,NA,1,7.05,FALSE
-365,"0","3","O'Brien","Mr","Thomas","male",NA,1,0,"370365",NA,370365,15.5,NA,"Q","train","(25,30]",1,NA,2,7.75,TRUE
+365,"0","3","O'Brien","Mr","Thomas","male",NA,1,0,"370365",NA,370365,15.5,NA,"Q","train","(20,25]",1,NA,2,7.75,TRUE
 366,"0","3","Adahl","Mr","Mauritz Nils Martin","male",30,0,0,"C 7076","C",7076,7.25,NA,"S","train","(25,30]",0,NA,1,7.25,FALSE
 367,"1","1","Warren","Mrs","Frank Manley (Anna Sophia Atkinson)","female",60,1,0,"110813",NA,110813,75.25,"D37","C","train","(55,60]",1,"D",2,37.625,FALSE
 368,"1","3","Moussa","Mrs","(Mantoura Boulos)","female",NA,0,0,"2626",NA,2626,7.2292,NA,"C","train","(20,25]",0,NA,1,7.2292,TRUE
@@ -430,7 +430,7 @@
 429,"0","3","Flynn","Mr","James","male",NA,0,0,"364851",NA,364851,7.75,NA,"Q","train","(20,25]",0,NA,1,7.75,TRUE
 430,"1","3","Pickard","Mr","Berk (Berk Trembisky)","male",32,0,0,"SOTON/O.Q. 392078","SOTON/OQ",392078,8.05,"E10","S","train","(30,35]",0,"E",1,8.05,FALSE
 431,"1","1","Bjornstrom-Steffansson","Mr","Mauritz Hakan","male",28,0,0,"110564",NA,110564,26.55,"C52","S","train","(25,30]",1,"C",1,26.55,FALSE
-432,"1","3","Thorneycroft","Mrs","Percival (Florence Kate White)","female",NA,1,0,"376564",NA,376564,16.1,NA,"S","train","(20,25]",1,NA,2,8.05,TRUE
+432,"1","3","Thorneycroft","Mrs","Percival (Florence Kate White)","female",NA,1,0,"376564",NA,376564,16.1,NA,"S","train","(15,20]",1,NA,2,8.05,TRUE
 433,"1","2","Louch","Mrs","Charles Alexander (Alice Adelaide Slow)","female",42,1,0,"SC/AH 3085","SC/AH",3085,26,NA,"S","train","(40,45]",1,NA,2,13,FALSE
 434,"0","3","Kallio","Mr","Nikolai Erland","male",17,0,0,"STON/O2. 3101274","STON/O2",3101274,7.125,NA,"S","train","(15,20]",0,NA,1,7.125,FALSE
 435,"0","1","Silvey","Mr","William Baird","male",50,1,0,"13507",NA,13507,55.9,"E44","S","train","(45,50]",1,"E",2,27.95,FALSE
@@ -450,7 +450,7 @@
 449,"1","3","Baclini","Miss","Marie Catherine","female",5,2,1,"2666",NA,2666,19.2583,NA,"C","train","(0,5]",3,NA,4,4.814575,FALSE
 450,"1","1","Peuchen","Noble","Arthur Godfrey","male",52,0,0,"113786",NA,113786,30.5,"C104","S","train","(50,55]",0,"C",1,30.5,FALSE
 451,"0","2","West","Mr","Edwy Arthur","male",36,1,2,"C.A. 34651","CA",34651,27.75,NA,"S","train","(35,40]",3,NA,4,6.9375,FALSE
-452,"0","3","Hagland","Mr","Ingvald Olai Olsen","male",NA,1,0,"65303",NA,65303,19.9667,NA,"S","train","(20,25]",1,NA,1,19.9667,TRUE
+452,"0","3","Hagland","Mr","Ingvald Olai Olsen","male",NA,1,0,"65303",NA,65303,19.9667,NA,"S","train","(25,30]",1,NA,1,19.9667,TRUE
 453,"0","1","Foreman","Mr","Benjamin Laventall","male",30,0,0,"113051",NA,113051,27.75,"C111","C","train","(25,30]",0,"C",1,27.75,FALSE
 454,"1","1","Goldenberg","Mr","Samuel L","male",49,1,0,"17453",NA,17453,89.1042,"C92","C","train","(45,50]",1,"C",2,44.5521,FALSE
 455,"0","3","Peduzzi","Mr","Joseph","male",NA,0,0,"A/5 2817","A/5",2817,8.05,NA,"S","train","(20,25]",0,NA,1,8.05,TRUE
@@ -489,7 +489,7 @@
 488,"0","1","Kent","Mr","Edward Austin","male",58,0,0,"11771",NA,11771,29.7,"B37","C","train","(55,60]",0,"B",1,29.7,FALSE
 489,"0","3","Somerton","Mr","Francis William","male",30,0,0,"A.5. 18509","A5",18509,8.05,NA,"S","train","(25,30]",0,NA,1,8.05,FALSE
 490,"1","3","Coutts","Master","Eden Leslie ""Neville""","male",9,1,1,"C.A. 37671","CA",37671,15.9,NA,"S","train","(5,10]",2,NA,3,5.3,FALSE
-491,"0","3","Hagland","Mr","Konrad Mathias Reiersen","male",NA,1,0,"65304",NA,65304,19.9667,NA,"S","train","(25,30]",1,NA,1,19.9667,TRUE
+491,"0","3","Hagland","Mr","Konrad Mathias Reiersen","male",NA,1,0,"65304",NA,65304,19.9667,NA,"S","train","(20,25]",1,NA,1,19.9667,TRUE
 492,"0","3","Windelov","Mr","Einar","male",21,0,0,"SOTON/OQ 3101317","SOTON/OQ",3101317,7.25,NA,"S","train","(20,25]",0,NA,1,7.25,FALSE
 493,"0","1","Molson","Mr","Harry Markland","male",55,0,0,"113787",NA,113787,30.5,"C30","S","train","(50,55]",0,"C",1,30.5,FALSE
 494,"0","1","Artagaveytia","Mr","Ramon","male",71,0,0,"PC 17609","PC",17609,49.5042,NA,"C","train","(70,75]",0,NA,1,49.5042,FALSE
@@ -546,7 +546,7 @@
 545,"0","1","Douglas","Mr","Walter Donald","male",50,1,0,"PC 17761","PC",17761,106.425,"C86","C","train","(45,50]",1,"C",3,35.475,FALSE
 546,"0","1","Nicholson","Mr","Arthur Ernest","male",64,0,0,"693",NA,693,26,NA,"S","train","(60,65]",0,NA,1,26,FALSE
 547,"1","2","Beane","Mrs","Edward (Ethel Clarke)","female",19,1,0,"2908",NA,2908,26,NA,"S","train","(15,20]",1,NA,2,13,FALSE
-548,"1","2","Padro y Manent","Mr","Julian","male",NA,0,0,"SC/PARIS 2146","SC/PARIS",2146,13.8625,NA,"C","train","(20,25]",0,NA,1,13.8625,TRUE
+548,"1","2","Padro y Manent","Mr","Julian","male",NA,0,0,"SC/PARIS 2146","SC/PARIS",2146,13.8625,NA,"C","train","(25,30]",0,NA,1,13.8625,TRUE
 549,"0","3","Goldsmith","Mr","Frank John","male",33,1,1,"363291",NA,363291,20.525,NA,"S","train","(30,35]",2,NA,3,6.84166666666667,FALSE
 550,"1","2","Davies","Master","John Morgan Jr","male",8,1,1,"C.A. 33112","CA",33112,36.75,NA,"S","train","(5,10]",2,NA,4,9.1875,FALSE
 551,"1","1","Thayer","Mr","John Borland Jr","male",17,0,2,"17421",NA,17421,110.8833,"C70","C","train","(15,20]",2,"C",4,27.720825,FALSE
@@ -577,7 +577,7 @@
 576,"0","3","Patchett","Mr","George","male",19,0,0,"358585",NA,358585,14.5,NA,"S","train","(15,20]",0,NA,2,7.25,FALSE
 577,"1","2","Garside","Miss","Ethel","female",34,0,0,"243880",NA,243880,13,NA,"S","train","(30,35]",0,NA,1,13,FALSE
 578,"1","1","Silvey","Mrs","William Baird (Alice Munger)","female",39,1,0,"13507",NA,13507,55.9,"E44","S","train","(35,40]",1,"E",2,27.95,FALSE
-579,"0","3","Caram","Mrs","Joseph (Maria Elias)","female",NA,1,0,"2689",NA,2689,14.4583,NA,"C","train","(15,20]",1,NA,2,7.22915,TRUE
+579,"0","3","Caram","Mrs","Joseph (Maria Elias)","female",NA,1,0,"2689",NA,2689,14.4583,NA,"C","train","(20,25]",1,NA,2,7.22915,TRUE
 580,"1","3","Jussila","Mr","Eiriik","male",32,0,0,"STON/O2. 3101286","STON/O2",3101286,7.925,NA,"S","train","(30,35]",0,NA,1,7.925,FALSE
 581,"1","2","Christy","Miss","Julie Rachel","female",25,1,1,"237789",NA,237789,30,NA,"S","train","(20,25]",2,NA,2,15,FALSE
 582,"1","1","Thayer","Mrs","John Borland (Marian Longstreth Morris)","female",39,1,1,"17421",NA,17421,110.8833,"C68","C","train","(35,40]",2,"C",4,27.720825,FALSE
@@ -601,7 +601,7 @@
 600,"1","1","Duff Gordon","Noble","Cosmo Edmund (""Mr Morgan"")","male",49,1,0,"PC 17485","PC",17485,56.9292,"A20","C","train","(45,50]",1,"A",2,28.4646,FALSE
 601,"1","2","Jacobsohn","Mrs","Sidney Samuel (Amy Frances Christy)","female",24,2,1,"243847",NA,243847,27,NA,"S","train","(20,25]",3,NA,2,13.5,FALSE
 602,"0","3","Slabenoff","Mr","Petco","male",NA,0,0,"349214",NA,349214,7.8958,NA,"S","train","(20,25]",0,NA,1,7.8958,TRUE
-603,"0","1","Harrington","Mr","Charles H","male",NA,0,0,"113796",NA,113796,42.4,NA,"S","train","(25,30]",0,NA,2,21.2,TRUE
+603,"0","1","Harrington","Mr","Charles H","male",NA,0,0,"113796",NA,113796,42.4,NA,"S","train","(35,40]",0,NA,2,21.2,TRUE
 604,"0","3","Torber","Mr","Ernst William","male",44,0,0,"364511",NA,364511,8.05,NA,"S","train","(40,45]",0,NA,1,8.05,FALSE
 605,"1","1","Homer","Mr","Harry (""Mr E Haven"")","male",35,0,0,"111426",NA,111426,26.55,NA,"C","train","(30,35]",0,NA,1,26.55,FALSE
 606,"0","3","Lindell","Mr","Edvard Bengtsson","male",36,1,0,"349910",NA,349910,15.55,NA,"S","train","(35,40]",1,NA,2,7.775,FALSE
@@ -691,7 +691,7 @@
 690,"1","1","Madill","Miss","Georgette Alexandra","female",15,0,1,"24160",NA,24160,211.3375,"B5","S","train","(10,15]",2,"B",4,52.834375,FALSE
 691,"1","1","Dick","Mr","Albert Adrian","male",31,1,0,"17474",NA,17474,57,"B20","S","train","(30,35]",1,"B",2,28.5,FALSE
 692,"1","3","Karun","Miss","Manca","female",4,0,1,"349256",NA,349256,13.4167,NA,"C","train","(0,5]",1,NA,2,6.70835,FALSE
-693,"1","3","Lam","Mr","Ali","male",NA,0,0,"1601",NA,1601,56.4958,NA,"S","train","(25,30]",0,NA,8,7.061975,TRUE
+693,"1","3","Lam","Mr","Ali","male",NA,0,0,"1601",NA,1601,56.4958,NA,"S","train","(20,25]",0,NA,8,7.061975,TRUE
 694,"0","3","Saad","Mr","Khalil","male",25,0,0,"2672",NA,2672,7.225,NA,"C","train","(20,25]",0,NA,1,7.225,FALSE
 695,"0","1","Weir","Noble","John","male",60,0,0,"113800",NA,113800,26.55,NA,"S","train","(55,60]",0,NA,1,26.55,FALSE
 696,"0","2","Chapman","Mr","Charles Henry","male",52,0,0,"248731",NA,248731,13.5,NA,"S","train","(50,55]",0,NA,1,13.5,FALSE
@@ -791,7 +791,7 @@
 790,"0","1","Guggenheim","Mr","Benjamin","male",46,0,0,"PC 17593","PC",17593,79.2,"B82 B84","C","train","(45,50]",0,"B",2,39.6,FALSE
 791,"0","3","Keane","Mr","Andrew ""Andy""","male",NA,0,0,"12460",NA,12460,7.75,NA,"Q","train","(20,25]",0,NA,1,7.75,TRUE
 792,"0","2","Gaskell","Mr","Alfred","male",16,0,0,"239865",NA,239865,26,NA,"S","train","(15,20]",0,NA,2,13,FALSE
-793,"0","3","Sage","Miss","Stella Anna","female",NA,8,2,"CA.2.43","CA243",NA,69.55,NA,"S","train","(20,25]",10,NA,11,6.32272727272727,TRUE
+793,"0","3","Sage","Miss","Stella Anna","female",NA,8,2,"CA.2.43","CA243",NA,69.55,NA,"S","train","(0,5]",10,NA,11,6.32272727272727,TRUE
 794,"0","1","Hoyt","Mr","William Fisher","male",NA,0,0,"PC 17600","PC",17600,30.6958,NA,"C","train","(20,25]",0,NA,1,30.6958,TRUE
 795,"0","3","Dantcheff","Mr","Ristiu","male",25,0,0,"349203",NA,349203,7.8958,NA,"S","train","(20,25]",0,NA,1,7.8958,FALSE
 796,"0","2","Otter","Mr","Richard","male",39,0,0,"28213",NA,28213,13,NA,"S","train","(35,40]",0,NA,1,13,FALSE
@@ -814,7 +814,7 @@
 813,"0","2","Slemen","Mr","Richard James","male",35,0,0,"28206",NA,28206,10.5,NA,"S","train","(30,35]",0,NA,1,10.5,FALSE
 814,"0","3","Andersson","Miss","Ebba Iris Alfrida","female",6,4,2,"347082",NA,347082,31.275,NA,"S","train","(5,10]",6,NA,7,4.46785714285714,FALSE
 815,"0","3","Tomlin","Mr","Ernest Portage","male",30.5,0,0,"364499",NA,364499,8.05,NA,"S","train","(30,35]",0,NA,1,8.05,FALSE
-816,"0","1","Fry","Mr","Richard","male",NA,0,0,"112058",NA,112058,0,"B102","S","train","(35,40]",0,"B",2,0,TRUE
+816,"0","1","Fry","Mr","Richard","male",NA,0,0,"112058",NA,112058,0,"B102","S","train","(45,50]",0,"B",2,0,TRUE
 817,"0","3","Heininen","Miss","Wendla Maria","female",23,0,0,"STON/O2. 3101290","STON/O2",3101290,7.925,NA,"S","train","(20,25]",0,NA,1,7.925,FALSE
 818,"0","2","Mallet","Mr","Albert","male",31,1,1,"S.C./PARIS 2079","SC/PARIS",2079,37.0042,NA,"C","train","(30,35]",2,NA,3,12.3347333333333,FALSE
 819,"0","3","Holm","Mr","John Fredrik Alexander","male",43,0,0,"C 7075","C",7075,6.45,NA,"S","train","(40,45]",0,NA,1,6.45,FALSE
@@ -825,7 +825,7 @@
 824,"1","3","Moor","Mrs","(Beila)","female",27,0,1,"392096",NA,392096,12.475,"E121","S","train","(25,30]",1,"E",2,6.2375,FALSE
 825,"0","3","Panula","Master","Urho Abraham","male",2,4,1,"3101295",NA,3101295,39.6875,NA,"S","train","(0,5]",5,NA,7,5.66964285714286,FALSE
 826,"0","3","Flynn","Mr","John","male",NA,0,0,"368323",NA,368323,6.95,NA,"Q","train","(20,25]",0,NA,1,6.95,TRUE
-827,"0","3","Lam","Mr","Len","male",NA,0,0,"1601",NA,1601,56.4958,NA,"S","train","(20,25]",0,NA,8,7.061975,TRUE
+827,"0","3","Lam","Mr","Len","male",NA,0,0,"1601",NA,1601,56.4958,NA,"S","train","(25,30]",0,NA,8,7.061975,TRUE
 828,"1","2","Mallet","Master","Andre","male",1,0,2,"S.C./PARIS 2079","SC/PARIS",2079,37.0042,NA,"C","train","(0,5]",2,NA,3,12.3347333333333,FALSE
 829,"1","3","McCormack","Mr","Thomas Joseph","male",NA,0,0,"367228",NA,367228,7.75,NA,"Q","train","(20,25]",0,NA,1,7.75,TRUE
 830,"1","1","Stone","Mrs","George Nelson (Martha Evelyn)","female",62,0,0,"113572",NA,113572,80,"B28","S","train","(60,65]",1,"B",2,40,FALSE
@@ -862,7 +862,7 @@
 861,"0","3","Hansen","Mr","Claus Peter","male",41,2,0,"350026",NA,350026,14.1083,NA,"S","train","(40,45]",2,NA,2,7.05415,FALSE
 862,"0","2","Giles","Mr","Frederick Edward","male",21,1,0,"28134",NA,28134,11.5,NA,"S","train","(20,25]",1,NA,1,11.5,FALSE
 863,"1","1","Swift","Mrs","Frederick Joel (Margaret Welles Barron)","female",48,0,0,"17466",NA,17466,25.9292,"D17","S","train","(45,50]",1,"D",1,25.9292,FALSE
-864,"0","3","Sage","Miss","Dorothy Edith ""Dolly""","female",NA,8,2,"CA.2.43","CA243",NA,69.55,NA,"S","train","(20,25]",10,NA,11,6.32272727272727,TRUE
+864,"0","3","Sage","Miss","Dorothy Edith ""Dolly""","female",NA,8,2,"CA.2.43","CA243",NA,69.55,NA,"S","train","(0,5]",10,NA,11,6.32272727272727,TRUE
 865,"0","2","Gill","Mr","John William","male",24,0,0,"233866",NA,233866,13,NA,"S","train","(20,25]",0,NA,1,13,FALSE
 866,"1","2","Bystrom","Mrs","(Karolina)","female",42,0,0,"236852",NA,236852,13,NA,"S","train","(40,45]",0,NA,1,13,FALSE
 867,"1","2","Duran y More","Miss","Asuncion","female",27,1,0,"SC/PARIS 2149","SC/PARIS",2149,13.8583,NA,"C","train","(25,30]",1,NA,1,13.8583,FALSE
@@ -923,13 +923,13 @@
 922,NA,"2","Louch","Mr","Charles Alexander","male",50,1,0,"SC/AH 3085","SC/AH",3085,26,NA,"S","test","(45,50]",1,NA,2,13,FALSE
 923,NA,"2","Jefferys","Mr","Clifford Thomas","male",24,2,0,"C.A. 31029","CA",31029,31.5,NA,"S","test","(20,25]",2,NA,3,10.5,FALSE
 924,NA,"3","Dean","Mrs","Bertram (Eva Georgetta Light)","female",33,1,2,"C.A.2.15","CA215",NA,20.575,NA,"S","test","(30,35]",3,NA,4,5.14375,FALSE
-925,NA,"3","Johnston","Mrs","Andrew G (Elizabeth Lily"" Watson)""","female",NA,1,2,"W./C. 6607","W/C",6607,23.45,NA,"S","test","(20,25]",3,NA,4,5.8625,TRUE
+925,NA,"3","Johnston","Mrs","Andrew G (Elizabeth Lily"" Watson)""","female",NA,1,2,"W./C. 6607","W/C",6607,23.45,NA,"S","test","(25,30]",3,NA,4,5.8625,TRUE
 926,NA,"1","Mock","Mr","Philipp Edmund","male",30,1,0,"13236",NA,13236,57.75,"C78","C","test","(25,30]",1,"C",2,28.875,FALSE
 927,NA,"3","Katavelas","Mr","Vassilios (Catavelas Vassilios"")""","male",18.5,0,0,"2682",NA,2682,7.2292,NA,"C","test","(15,20]",0,NA,1,7.2292,FALSE
 928,NA,"3","Roth","Miss","Sarah A","female",NA,0,0,"342712",NA,342712,8.05,NA,"S","test","(20,25]",0,NA,1,8.05,TRUE
 929,NA,"3","Cacic","Miss","Manda","female",21,0,0,"315087",NA,315087,8.6625,NA,"S","test","(20,25]",0,NA,1,8.6625,FALSE
 930,NA,"3","Sap","Mr","Julius","male",25,0,0,"345768",NA,345768,9.5,NA,"S","test","(20,25]",0,NA,1,9.5,FALSE
-931,NA,"3","Hee","Mr","Ling","male",NA,0,0,"1601",NA,1601,56.4958,NA,"S","test","(25,30]",0,NA,8,7.061975,TRUE
+931,NA,"3","Hee","Mr","Ling","male",NA,0,0,"1601",NA,1601,56.4958,NA,"S","test","(20,25]",0,NA,8,7.061975,TRUE
 932,NA,"3","Karun","Mr","Franz","male",39,0,1,"349256",NA,349256,13.4167,NA,"C","test","(35,40]",1,NA,2,6.70835,FALSE
 933,NA,"1","Franklin","Mr","Thomas Parham","male",NA,0,0,"113778",NA,113778,26.55,"D34","S","test","(25,30]",0,"D",1,26.55,TRUE
 934,NA,"3","Goldsmith","Mr","Nathan","male",41,0,0,"SOTON/O.Q. 3101263","SOTON/OQ",3101263,7.85,NA,"S","test","(40,45]",0,NA,1,7.85,FALSE
@@ -948,7 +948,7 @@
 947,NA,"3","Rice","Master","Albert","male",10,4,1,"382652",NA,382652,29.125,NA,"Q","test","(5,10]",5,NA,6,4.85416666666667,FALSE
 948,NA,"3","Cor","Mr","Bartol","male",35,0,0,"349230",NA,349230,7.8958,NA,"S","test","(30,35]",0,NA,1,7.8958,FALSE
 949,NA,"3","Abelseth","Mr","Olaus Jorgensen","male",25,0,0,"348122",NA,348122,7.65,"F G63","S","test","(20,25]",0,"F",1,7.65,FALSE
-950,NA,"3","Davison","Mr","Thomas Henry","male",NA,1,0,"386525",NA,386525,16.1,NA,"S","test","(25,30]",1,NA,2,8.05,TRUE
+950,NA,"3","Davison","Mr","Thomas Henry","male",NA,1,0,"386525",NA,386525,16.1,NA,"S","test","(20,25]",1,NA,2,8.05,TRUE
 951,NA,"1","Chaudanson","Miss","Victorine","female",36,0,0,"PC 17608","PC",17608,262.375,"B61","C","test","(35,40]",0,"B",7,37.4821428571429,FALSE
 952,NA,"3","Dika","Mr","Mirko","male",17,0,0,"349232",NA,349232,7.8958,NA,"S","test","(15,20]",0,NA,1,7.8958,FALSE
 953,NA,"2","McCrae","Mr","Arthur Gordon","male",32,0,0,"237216",NA,237216,13.5,NA,"S","test","(30,35]",0,NA,1,13.5,FALSE
@@ -1023,7 +1023,7 @@
 1022,NA,"3","Spinner","Mr","Henry John","male",32,0,0,"STON/OQ. 369943","STON/OQ",369943,8.05,NA,"S","test","(30,35]",0,NA,1,8.05,FALSE
 1023,NA,"1","Gracie","Noble","Archibald IV","male",53,0,0,"113780",NA,113780,28.5,"C51","C","test","(50,55]",0,"C",1,28.5,FALSE
 1024,NA,"3","Lefebre","Mrs","Frank (Frances)","female",NA,0,4,"4133",NA,4133,25.4667,NA,"S","test","(35,40]",4,NA,5,5.09334,TRUE
-1025,NA,"3","Thomas","Mr","Charles P","male",NA,1,0,"2621",NA,2621,6.4375,NA,"C","test","(20,25]",1,NA,1,6.4375,TRUE
+1025,NA,"3","Thomas","Mr","Charles P","male",NA,1,0,"2621",NA,2621,6.4375,NA,"C","test","(25,30]",1,NA,1,6.4375,TRUE
 1026,NA,"3","Dintcheff","Mr","Valtcho","male",43,0,0,"349226",NA,349226,7.8958,NA,"S","test","(40,45]",0,NA,1,7.8958,FALSE
 1027,NA,"3","Carlsson","Mr","Carl Robert","male",24,0,0,"350409",NA,350409,7.8542,NA,"S","test","(20,25]",0,NA,1,7.8542,FALSE
 1028,NA,"3","Zakarian","Mr","Mapriededer","male",26.5,0,0,"2656",NA,2656,7.225,NA,"C","test","(25,30]",0,NA,1,7.225,FALSE
@@ -1139,7 +1139,7 @@
 1138,NA,"2","Karnes","Mrs","J Frank (Claire Bennett)","female",22,0,0,"F.C.C. 13534","FCC",13534,21,NA,"S","test","(20,25]",0,NA,2,10.5,FALSE
 1139,NA,"2","Drew","Mr","James Vivian","male",42,1,1,"28220",NA,28220,32.5,NA,"S","test","(40,45]",2,NA,3,10.8333333333333,FALSE
 1140,NA,"2","Hold","Mrs","Stephen (Annie Margaret Hill)","female",29,1,0,"26707",NA,26707,26,NA,"S","test","(25,30]",1,NA,2,13,FALSE
-1141,NA,"3","Khalil","Mrs","Betros (Zahie Maria"" Elias)""","female",NA,1,0,"2660",NA,2660,14.4542,NA,"C","test","(15,20]",1,NA,2,7.2271,TRUE
+1141,NA,"3","Khalil","Mrs","Betros (Zahie Maria"" Elias)""","female",NA,1,0,"2660",NA,2660,14.4542,NA,"C","test","(20,25]",1,NA,2,7.2271,TRUE
 1142,NA,"2","West","Miss","Barbara J","female",0.92,1,2,"C.A. 34651","CA",34651,27.75,NA,"S","test","(0,5]",3,NA,4,6.9375,FALSE
 1143,NA,"3","Abrahamsson","Mr","Abraham August Johannes","male",20,0,0,"SOTON/O2 3101284","SOTON/O2",3101284,7.925,NA,"S","test","(15,20]",0,NA,1,7.925,FALSE
 1144,NA,"1","Clark","Mr","Walter Miller","male",27,1,0,"13508",NA,13508,136.7792,"C89","C","test","(25,30]",1,"C",2,68.3896,FALSE
@@ -1163,7 +1163,7 @@
 1162,NA,"1","McCaffry","Mr","Thomas Francis","male",46,0,0,"13050",NA,13050,75.2417,"C6","C","test","(45,50]",1,"C",2,37.62085,FALSE
 1163,NA,"3","Fox","Mr","Patrick","male",NA,0,0,"368573",NA,368573,7.75,NA,"Q","test","(20,25]",0,NA,1,7.75,TRUE
 1164,NA,"1","Clark","Mrs","Walter Miller (Virginia McDowell)","female",26,1,0,"13508",NA,13508,136.7792,"C89","C","test","(25,30]",1,"C",2,68.3896,FALSE
-1165,NA,"3","Lennon","Miss","Mary","female",NA,1,0,"370371",NA,370371,15.5,NA,"Q","test","(20,25]",1,NA,2,7.75,TRUE
+1165,NA,"3","Lennon","Miss","Mary","female",NA,1,0,"370371",NA,370371,15.5,NA,"Q","test","(15,20]",1,NA,2,7.75,TRUE
 1166,NA,"3","Saade","Mr","Jean Nassr","male",NA,0,0,"2676",NA,2676,7.225,NA,"C","test","(20,25]",0,NA,1,7.225,TRUE
 1167,NA,"2","Bryhl","Miss","Dagmar Jenny Ingeborg ","female",20,1,0,"236853",NA,236853,26,NA,"S","test","(15,20]",1,NA,2,13,FALSE
 1168,NA,"2","Parker","Mr","Clifford Richard","male",28,0,0,"SC 14888","SC",14888,10.5,NA,"S","test","(25,30]",0,NA,1,10.5,FALSE
@@ -1256,7 +1256,7 @@
 1255,NA,"3","Strilic","Mr","Ivan","male",27,0,0,"315083",NA,315083,8.6625,NA,"S","test","(25,30]",0,NA,1,8.6625,FALSE
 1256,NA,"1","Harder","Mrs","George Achilles (Dorothy Annan)","female",25,1,0,"11765",NA,11765,55.4417,"E50","C","test","(20,25]",1,"E",2,27.72085,FALSE
 1257,NA,"3","Sage","Mrs","John (Annie Bullen)","female",NA,1,9,"CA.2.43","CA243",NA,69.55,NA,"S","test","(25,30]",10,NA,11,6.32272727272727,TRUE
-1258,NA,"3","Caram","Mr","Joseph","male",NA,1,0,"2689",NA,2689,14.4583,NA,"C","test","(25,30]",1,NA,2,7.22915,TRUE
+1258,NA,"3","Caram","Mr","Joseph","male",NA,1,0,"2689",NA,2689,14.4583,NA,"C","test","(20,25]",1,NA,2,7.22915,TRUE
 1259,NA,"3","Riihivouri","Miss","Susanna Juhantytar Sanni""""","female",22,0,0,"3101295",NA,3101295,39.6875,NA,"S","test","(20,25]",0,NA,7,5.66964285714286,FALSE
 1260,NA,"1","Gibson","Mrs","Leonard (Pauline C Boeson)","female",45,0,1,"112378",NA,112378,59.4,NA,"C","test","(40,45]",1,NA,2,29.7,FALSE
 1261,NA,"2","Pallas y Castello","Mr","Emilio","male",29,0,0,"SC/PARIS 2147","SC/PARIS",2147,13.8583,NA,"C","test","(25,30]",0,NA,1,13.8583,FALSE
